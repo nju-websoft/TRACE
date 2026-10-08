@@ -155,6 +155,8 @@ Graph QA uses the modules in `QA/`. Supply question/test-image/graph inputs thro
 
 `docs/index.html` is a static page with local assets. **Chinese is the default**; the header switches languages, and `?lang=en` opens English directly. It includes the method diagram, a predefined arrow-query illustration, five-backbone results, QA, batching, PDFs, and citation copying. It does not call a live model. The poster QR code stays pointed at https://github.com/nju-websoft/TRACE.
 
+The page follows the research poster's visual identity: white background, purple titles, pastel section rails, rounded panels, and original poster illustrations and institutional logos. On mobile, vertical rails become horizontal section headers. See [poster artwork notices](docs/assets/poster/README.md) for asset provenance and rights.
+
 ```bash
 python -m http.server 8000 --directory docs
 ```

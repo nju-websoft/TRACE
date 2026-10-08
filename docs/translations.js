@@ -84,8 +84,8 @@ const translations = {
     "zh": "以上代表性结果使用 Qwen3-VL-4B；问答在 TextFlow 公开的评测子集上进行，具体设置见下文。"
   },
   "t21": {
-    "en": "01 / THE METHOD",
-    "zh": "01 / 核心方法"
+    "en": "02 / THE METHOD",
+    "zh": "02 / 核心方法"
   },
   "t22": {
     "en": "A local anchor.<br/>A global view.",
@@ -176,8 +176,8 @@ const translations = {
     "zh": "否"
   },
   "t44": {
-    "en": "02 / THE EVIDENCE",
-    "zh": "02 / 实验结果"
+    "en": "03 / THE EVIDENCE",
+    "zh": "03 / 实验结果"
   },
   "t45": {
     "en": "Recovering structure<br/>across visual styles.",
@@ -268,8 +268,8 @@ const translations = {
     "zh": "推理骨干均为 Qwen3-VL-4B；TextFlow 输入真值 Mermaid 文本。公开子集包含 100 张 FlowLearn 和 197 张 FlowVQA 图像。来源：论文表 4。"
   },
   "t67": {
-    "en": "03 / BATCHING ARROWHEADS",
-    "zh": "03 / 多箭头批量查询"
+    "en": "04 / BATCHING ARROWHEADS",
+    "zh": "04 / 多箭头批量查询"
   },
   "t68": {
     "en": "More arrows per query.<br/>Less time per image.",
@@ -296,8 +296,8 @@ const translations = {
     "zh": "九个基准的宏平均，Qwen3-VL-4B，NVIDIA RTX 5880 Ada。E2E：78.39 F1、2.73 秒/图像。来源：论文表 10。"
   },
   "t74": {
-    "en": "04 / RESEARCH RESOURCES",
-    "zh": "04 / 论文与开源资源"
+    "en": "05 / RESEARCH RESOURCES",
+    "zh": "05 / 论文与开源资源"
   },
   "t75": {
     "en": "Build on TRACE.",
@@ -366,6 +366,30 @@ const translations = {
   "t91": {
     "en": "Nanjing University · Lenovo<br/><a href=\"mailto:gcheng@nju.edu.cn\">gcheng@nju.edu.cn</a>",
     "zh": "南京大学 · 联想<br><a href='mailto:gcheng@nju.edu.cn'>gcheng@nju.edu.cn</a>"
+  },
+  "t97": {
+    "en": "1 / Motivation",
+    "zh": "1 / 研究动机"
+  },
+  "t98": {
+    "en": "Dense flowcharts make individual arrows easy to miss or reverse.",
+    "zh": "密集流程图中的细小连线，容易被遗漏或反转。"
+  },
+  "t93": {
+    "en": "Analysis",
+    "zh": "分析"
+  },
+  "t94": {
+    "en": "Explore TRACE with our research poster",
+    "zh": "与研究海报一起，了解 TRACE"
+  },
+  "t95": {
+    "en": "From the poster to the code",
+    "zh": "从海报到开源代码"
+  },
+  "t96": {
+    "en": "Scan the original poster QR or follow the link to the GitHub repository.",
+    "zh": "扫描海报原二维码，或点击链接访问 GitHub 仓库。"
   },
   "t92": {
     "en": "Research code: Apache-2.0.<br/>Third-party models and data retain their own terms.",
