@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Please cite TRACE if you use this code. This is a repository citation; an archival paper entry can be added when available."
+message: "Please cite the TRACE paper, accepted to the EMNLP 2026 Main Conference, if you use this code. See README.md for the provisional paper citation; archival proceedings metadata is forthcoming."
 title: "TRACE: Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding"
 type: software
 authors:

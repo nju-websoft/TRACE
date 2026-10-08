@@ -2,10 +2,12 @@
 
 **Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding**
 
+**EMNLP 2026 Main 已接收论文 · Accepted to EMNLP 2026 Main Conference**
+
 Daozhu Dong, Kaiwen Shi, Dan Si, Xiaoyu Hao, Tong Liu, Wenjie Zhang, Gong Cheng  
 Nanjing University · Lenovo (Beijing) Co., Ltd.
 
-[论文 / Paper](docs/files/trace-paper.pdf) · [海报 / Poster](docs/files/trace-poster.pdf) · [双语网页 / Website](docs/index.html) · [复现细节 / Reproduction](docs/REPRODUCING.md)
+[论文 / Paper](docs/files/trace-paper.pdf) · [海报 / Poster](docs/files/trace-poster.pdf) · [中文网页](https://nju-websoft.github.io/TRACE/) · [English website](https://nju-websoft.github.io/TRACE/?lang=en) · [复现细节 / Reproduction](docs/REPRODUCING.md)
 
 TRACE 以箭头头部为视觉锚点，在保留完整流程图上下文的情况下逐条提取 `(source, condition, target)` 三元组，再汇聚成可追溯的有向图。研究覆盖 9 个评测基准和 5 个 VLM 骨干，包含训练、推理、评测与下游图问答。
 
@@ -157,19 +159,23 @@ Graph QA uses the modules in `QA/`. Supply question/test-image/graph inputs thro
 python -m http.server 8000 --directory docs
 ```
 
-Open `http://localhost:8000`. After pushing, GitHub Pages can serve `main` → `/docs` through **Settings → Pages → Deploy from a branch**. The proposed address is `https://nju-websoft.github.io/TRACE/`; use it in a CV only after deployment succeeds. Append `?lang=en` for English.
+Open `http://localhost:8000`. The published project website is [https://nju-websoft.github.io/TRACE/](https://nju-websoft.github.io/TRACE/), served by GitHub Pages from `main` → `/docs`. Use this address in a CV; append `?lang=en` for English.
 
 ## License and citation
 
 TRACE-authored code: [Apache-2.0](LICENSE). Third-party code, models, and data retain their terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ```bibtex
-@misc{dong2026trace,
+@inproceedings{dong2026trace,
   title = {TRACE: Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding},
   author = {Dong, Daozhu and Shi, Kaiwen and Si, Dan and Hao, Xiaoyu and Liu, Tong and Zhang, Wenjie and Cheng, Gong},
+  booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},
   year = {2026},
+  note = {Accepted to the Main Conference; proceedings metadata forthcoming},
   url = {https://github.com/nju-websoft/TRACE}
 }
 ```
 
-This is a repository citation; replace it with the archival paper entry when available. Correspondence: gcheng@nju.edu.cn.
+论文已被 **EMNLP 2026 Main Conference** 接收。以上为临时论文引用，正式论文集发布后将补充页码、DOI 和 ACL Anthology 链接。
+
+The paper is accepted to the **EMNLP 2026 Main Conference**. This is a provisional paper citation; pages, DOI, and the ACL Anthology URL will be added when the proceedings are available. Correspondence: gcheng@nju.edu.cn.

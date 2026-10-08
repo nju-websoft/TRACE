@@ -16,8 +16,8 @@ const translations = {
     "zh": "资源"
   },
   "t4": {
-    "en": "FLOWCHART UNDERSTANDING",
-    "zh": "研究项目 · 多模态流程图理解"
+    "en": "EMNLP 2026 MAIN · ACCEPTED",
+    "zh": "EMNLP 2026 Main · 已接收论文"
   },
   "t5": {
     "en": "Read the graph.<br/><span>One arrow at a time.</span>",
@@ -360,8 +360,8 @@ const translations = {
     "zh": "复制 BibTeX"
   },
   "t90": {
-    "en": "Repository citation; replace with the archival proceedings entry when available.",
-    "zh": "当前为仓库引用条目；正式论文集条目可用后可替换。"
+    "en": "Accepted to the EMNLP 2026 Main Conference. Provisional paper citation; pages, DOI, and the ACL Anthology URL will be added when the proceedings are available.",
+    "zh": "论文已被 EMNLP 2026 Main Conference 接收。当前为临时论文引用；正式论文集发布后将补充页码、DOI 和 ACL Anthology 链接。"
   },
   "t91": {
     "en": "Nanjing University · Lenovo<br/><a href=\"mailto:gcheng@nju.edu.cn\">gcheng@nju.edu.cn</a>",
