@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "Please cite TRACE if you use this code. This is a repository citation; an archival paper entry can be added when available."
+title: "TRACE: Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding"
+type: software
+authors:
+  - family-names: Dong
+    given-names: Daozhu
+  - family-names: Shi
+    given-names: Kaiwen
+  - family-names: Si
+    given-names: Dan
+  - family-names: Hao
+    given-names: Xiaoyu
+  - family-names: Liu
+    given-names: Tong
+  - family-names: Zhang
+    given-names: Wenjie
+  - family-names: Cheng
+    given-names: Gong
+repository-code: "https://github.com/nju-websoft/TRACE"
+license: Apache-2.0

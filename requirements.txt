@@ -1,0 +1,25 @@
+# Paper environment. Install the CUDA-compatible torch wheel separately if needed.
+torch==2.8.0
+torchvision==0.23.0
+transformers==4.57.1
+peft==0.15.2
+accelerate>=1.10,<2
+pillow==11.3.0
+opencv-python==4.11.0.86
+numpy>=1.26,<2
+qwen-vl-utils>=0.0.14
+json-repair>=0.30
+python-Levenshtein==0.27.3
+openai>=1.0
+tqdm
+PyYAML
+timm>=1.0.17
+ftfy==6.1.1
+regex
+iopath>=0.1.10
+huggingface-hub
+einops
+scipy
+pycocotools
+psutil
+typing-extensions

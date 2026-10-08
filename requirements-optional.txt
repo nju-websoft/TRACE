@@ -1,0 +1,6 @@
+# Install only the packages required for your chosen backend/task.
+ms-swift
+paddleocr
+wordfreq
+cairosvg
+diagrams
