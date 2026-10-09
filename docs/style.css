@@ -67,7 +67,7 @@ h1 span { color: var(--purple); }
 .authors { color: var(--ink); background: #f6f1f7; border-radius: 8px; padding: 12px 16px; font-size: .94rem; line-height: 1.65; margin-bottom: 10px; }
 .affiliations { font-size: .86rem; color: var(--muted); margin-bottom: 0; }
 .hero-spec { align-self: center; display: flex; flex-direction: column; align-items: center; text-align: center; font-size: .78rem; color: #7a4f49; border: 1px solid var(--coral); border-radius: 24px; padding: 22px 18px; background: #fffaf8; }
-.hero-rabbit { width: 175px; height: auto; margin: 0 0 16px; }
+.hero-rabbit { width: 175px; height: auto; margin: 0 0 16px; transform: scaleX(-1); }
 .hero-spec .eyebrow { color: #b3544e; background: none; border: none; border-radius: 0; padding: 0; margin-bottom: 14px; }
 .hero-spec .motivation-note { font-size: .85rem; line-height: 1.55; color: #7a4f49; margin-bottom: 16px; }
 .hero-spec code { color: var(--ink); font-size: .84rem; margin: 5px 0; }
@@ -101,8 +101,7 @@ h1 span { color: var(--purple); }
 .motivation-art { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 250px; }
 .motivation-art img { width: 40%; max-width: 185px; height: 225px; object-fit: contain; }
 .motivation-arrow { color: #e4827a; font-size: 2.8rem; font-weight: 700; }
-.whole-image-art img:first-child { width: 65%; max-width: 270px; height: 245px; }
-.whole-image-art img + img { width: 27%; max-width: 110px; }
+.whole-image-art svg { width: 100%; height: auto; max-height: 250px; display: block; }
 .motivation-takeaway { font-size: 1.2rem; line-height: 1.8; color: #8e4640; font-weight: 700; padding: 15px 20px; margin: 24px 0 0; background: #fff0ec; border-radius: 9px; }
 .results-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 30px; margin-top: 22px; }
 .results-grid article { min-width: 0; }
@@ -327,7 +326,7 @@ footer p { font-size: .8rem; color: var(--muted); margin: 0; }
   .motivation-art { gap: 8px; min-height: 185px; }
   .motivation-art img { height: 170px; }
   .motivation-arrow { font-size: 2rem; }
-  .whole-image-art img:first-child { height: 185px; }
+  .whole-image-art svg { max-height: 185px; }
   .motivation-takeaway { font-size: 1.125rem; padding: 14px; }
   .analysis-question > p:not(.eyebrow):not(.source-note) { font-size: 1.0625rem; }
   .analysis-question h3 { font-size: 1.65rem; }

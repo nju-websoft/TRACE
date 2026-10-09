@@ -408,8 +408,8 @@ const translations = {
     "zh": "动机"
   },
   "t109": {
-    "en": "Why are flowchart edges<br/>difficult to recover?",
-    "zh": "为什么流程图里的边，<br>如此难以读准？"
+    "en": "Why are connection relationships<br/>in flowcharts difficult to recover?",
+    "zh": "为什么流程图里的连接关系，<br>如此难以恢复？"
   },
   "t110": {
     "en": "A flowchart's meaning depends on each connection's source, condition, and target. Missed nodes propagate errors into graph reconstruction; thin, dense connectors can also be missed or reversed during whole-image extraction.",
@@ -434,10 +434,6 @@ const translations = {
   "t115": {
     "en": "Our response: anchor each query to one arrowhead, while keeping the full flowchart as context.",
     "zh": "因此，我们把查询锚定到一个箭头头部，同时保留完整流程图作为上下文。"
-  },
-  "t116": {
-    "en": "Failure-mode illustrations from the TRACE research poster, not additional experimental results.",
-    "zh": "错误模式示意来自 TRACE 研究海报，不是额外的实验结果。"
   },
   "t117": {
     "en": "FlowLearn QA improvement over TextFlow",

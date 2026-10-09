@@ -23,13 +23,12 @@
 <p class="metric-note container" data-i18n="t20">以上代表性结果使用 Qwen3-VL-4B；问答在 TextFlow 公开的评测子集上进行，具体设置见下文。</p>
 <section class="container section poster-panel motivation-panel" id="motivation">
 <div class="poster-rail"><span class="rail-number">1</span><span class="rail-label" data-i18n="t108">动机</span></div>
-<div class="section-heading"><p class="eyebrow" data-i18n="t97">01 / 研究动机</p><h2 data-i18n="t109">为什么流程图里的边，<br/>如此难以读准？</h2><p data-i18n="t110">流程图的语义由连线的起点、条件和终点共同决定。节点漏检会传递到图重建；整图抽取又容易在细小、密集的连线中遗漏或反转方向。</p></div>
+<div class="section-heading"><p class="eyebrow" data-i18n="t97">01 / 研究动机</p><h2 data-i18n="t109">为什么流程图里的连接关系，<br/>如此难以恢复？</h2><p data-i18n="t110">流程图的语义由连线的起点、条件和终点共同决定。节点漏检会传递到图重建；整图抽取又容易在细小、密集的连线中遗漏或反转方向。</p></div>
 <div class="motivation-grid">
 <article><h3 data-i18n="t111">检测 → 重建</h3><p data-i18n="t112">一个节点漏检，就可能带来多条缺失或错误的边。</p><div class="motivation-art"><img src="assets/poster/motivation-detection.png" alt="节点检测遗漏了 C 节点 / Detection misses node C" width="631" height="714" loading="lazy"/><span class="motivation-arrow" aria-hidden="true">→</span><img src="assets/poster/motivation-reconstruction.png" alt="漏检节点导致缺失或错误的连接 / Missing node produces missing or incorrect edges" width="666" height="714" loading="lazy"/></div></article>
-<article><h3 data-i18n="t113">整图 VLM 抽取</h3><p data-i18n="t114">密集布局和细小箭头让逐条连接难以追踪，模型可能遗漏连线或反转方向。</p><div class="motivation-art whole-image-art"><img src="assets/poster/motivation-whole-image.png" alt="模型难以追踪密集连线的海报示意 / Poster illustration of difficulty tracing dense connectors" width="1254" height="1254" loading="lazy"/><img src="assets/poster/motivation-flowchart.png" alt="具有分支和合并连接的流程图 / Flowchart with branching and merging paths" width="594" height="862" loading="lazy"/></div></article>
+<article><h3 data-i18n="t113">整图 VLM 抽取</h3><p data-i18n="t114">密集布局和细小箭头让逐条连接难以追踪，模型可能遗漏连线或反转方向。</p><div class="motivation-art whole-image-art"><svg viewBox="1259.8 519.2 780.2 415.64" role="img" aria-labelledby="whole-image-art-title"><title id="whole-image-art-title">海报原图：流程图经粉色箭头指向难以辨识连接的模型 / Original poster: flowchart and pink arrow pointing to a model struggling to recover connections</title><image href="assets/poster/motivation-pink-beam.png" x="1614.68" y="624.43" width="169.82" height="242.47"/><image href="assets/poster/motivation-flowchart.png" x="1759.66" y="519.2" width="280.34" height="406.6"/><image href="assets/poster/motivation-whole-image.png" x="1259.8" y="546.42" width="388.42" height="388.42"/></svg></div></article>
 </div>
 <p class="motivation-takeaway" data-i18n="t115">因此，我们把查询锚定到一个箭头头部，同时保留完整流程图作为上下文。</p>
-<p class="source-note" data-i18n="t116">错误模式示意来自 TRACE 研究海报，不是额外的实验结果。</p>
 </section>
 <section class="container section poster-panel method-panel" id="method">
 <div class="poster-rail"><span class="rail-number">2</span><span class="rail-label" data-i18n="t1">方法</span></div>
