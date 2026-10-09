@@ -8,8 +8,8 @@ const translations = {
     "zh": "方法"
   },
   "t2": {
-    "en": "Results",
-    "zh": "结果"
+    "en": "Experiments",
+    "zh": "实验"
   },
   "t3": {
     "en": "Resources",
@@ -180,8 +180,8 @@ const translations = {
     "zh": "03 / 实验结果"
   },
   "t45": {
-    "en": "Recovering structure<br/>across visual styles.",
-    "zh": "跨越视觉风格，<br>恢复流程图结构。"
+    "en": "From triplet recovery<br/>to process questions.",
+    "zh": "从三元组恢复，<br>到流程问答。"
   },
   "t46": {
     "en": "Nine benchmarks cover handwritten diagrams, conventional flowcharts, hierarchical BPMN, and generated diagrams of increasing complexity. Compare fine-tuned TRACE and whole-image extraction under the same backbone.",
@@ -220,8 +220,8 @@ const translations = {
     "zh": "跨风格泛化"
   },
   "t55": {
-    "en": "Higher F1 on <span class=\"accent\">8 / 9</span><br/>unseen benchmarks.",
-    "zh": "在 <span class='accent'>8 / 9</span> 个未见基准上，<br>获得更高的 F1。"
+    "en": "How robust is TRACE<br/>across domains?",
+    "zh": "跨越不同领域，<br>TRACE 是否依然稳健？"
   },
   "t56": {
     "en": "Train on eight benchmarks and evaluate on the held-out one. TRACE improves over E2E on eight; CBD is the exception (83.31 vs. 83.66 F1).",
@@ -240,8 +240,8 @@ const translations = {
     "zh": "下游推理"
   },
   "t60": {
-    "en": "A graph that answers<br/>process questions.",
-    "zh": "从结构化图，<br>到流程问答。"
+    "en": "Downstream QA accuracy (%)",
+    "zh": "下游问答准确率（%）"
   },
   "t61": {
     "en": "Downstream QA accuracy in percent",
@@ -268,16 +268,16 @@ const translations = {
     "zh": "推理骨干均为 Qwen3-VL-4B；TextFlow 输入真值 Mermaid 文本。公开子集包含 100 张 FlowLearn 和 197 张 FlowVQA 图像。来源：论文表 4。"
   },
   "t67": {
-    "en": "04 / BATCHING ARROWHEADS",
-    "zh": "04 / 多箭头批量查询"
+    "en": "04 / ANALYSIS",
+    "zh": "04 / 深入分析"
   },
   "t68": {
-    "en": "More arrows per query.<br/>Less time per image.",
-    "zh": "一次查询更多箭头，<br>降低单图推理时间。"
+    "en": "Is one query per arrowhead<br/>too slow?",
+    "zh": "每个箭头都查询一次，<br>会不会太慢？"
   },
   "t69": {
-    "en": "Highlight K arrowheads on the same full image and request K numbered triplets. Batching three reduces macro-average latency by 39%, with a 0.49-point F1 decrease relative to K = 1.",
-    "zh": "在同一张完整图像中标记 K 个箭头头部，一次请求 K 条编号三元组。K = 3 相比 K = 1 将宏平均延迟降低 39%，F1 仅下降 0.49 个百分点。"
+    "en": "Highlight K arrowheads on the same full image and request K numbered triplets. Compare K = 1, 2, and 3 below: macro-average latency and accuracy reveal the efficiency–accuracy trade-off.",
+    "zh": "在同一张完整图像中标记 K 个箭头头部，一次请求 K 条编号三元组。下方比较 K = 1、2、3 的宏平均延迟和准确率，展示批量查询的效率与精度权衡。"
   },
   "t70": {
     "en": "s / image",
@@ -403,9 +403,81 @@ const translations = {
     "en": "Download BPMN source",
     "zh": "下载 BPMN 源文件"
   },
+  "t108": {
+    "en": "Motivation",
+    "zh": "动机"
+  },
+  "t109": {
+    "en": "Why are flowchart edges<br/>difficult to recover?",
+    "zh": "为什么流程图里的边，<br>如此难以读准？"
+  },
+  "t110": {
+    "en": "A flowchart's meaning depends on each connection's source, condition, and target. Missed nodes propagate errors into graph reconstruction; thin, dense connectors can also be missed or reversed during whole-image extraction.",
+    "zh": "流程图的语义由连线的起点、条件和终点共同决定。节点漏检会传递到图重建；整图抽取又容易在细小、密集的连线中遗漏或反转方向。"
+  },
+  "t111": {
+    "en": "Detection → reconstruction",
+    "zh": "检测 → 重建"
+  },
+  "t112": {
+    "en": "A single missed node can lead to multiple missing or incorrect edges.",
+    "zh": "一个节点漏检，就可能带来多条缺失或错误的边。"
+  },
+  "t113": {
+    "en": "Whole-image VLM extraction",
+    "zh": "整图 VLM 抽取"
+  },
+  "t114": {
+    "en": "Dense layouts and small arrowheads make individual connections hard to trace. A model may miss an edge or reverse its direction.",
+    "zh": "密集布局和细小箭头让逐条连接难以追踪，模型可能遗漏连线或反转方向。"
+  },
+  "t115": {
+    "en": "Our response: anchor each query to one arrowhead, while keeping the full flowchart as context.",
+    "zh": "因此，我们把查询锚定到一个箭头头部，同时保留完整流程图作为上下文。"
+  },
+  "t116": {
+    "en": "Failure-mode illustrations from the TRACE research poster, not additional experimental results.",
+    "zh": "错误模式示意来自 TRACE 研究海报，不是额外的实验结果。"
+  },
+  "t117": {
+    "en": "FlowLearn QA improvement over TextFlow",
+    "zh": "FlowLearn 问答准确率相对 TextFlow 的提升"
+  },
+  "t118": {
+    "en": "Higher F1 on <strong>8 / 9</strong> unseen benchmarks.",
+    "zh": "在 <strong>8 / 9</strong> 个未见基准上，获得更高的 F1。"
+  },
+  "t119": {
+    "en": "K = 3: <strong>39%</strong> lower latency, with only <strong>0.49</strong> F1 points lost.",
+    "zh": "K = 3：延迟降低 <strong>39%</strong>，F1 仅下降 <strong>0.49</strong> 个百分点。"
+  },
+  "t120": {
+    "en": "Two questions.<br/>A closer look at TRACE.",
+    "zh": "两个问题，<br>进一步检验 TRACE。"
+  },
+  "t121": {
+    "en": "Beyond extraction accuracy, we examine cross-domain generalization and the trade-off between accuracy and inference efficiency.",
+    "zh": "除了提取准确率，我们进一步考察跨领域泛化，以及准确率与推理效率的权衡。"
+  },
+  "t122": {
+    "en": "Leave-one-benchmark-out exact F1 (%)",
+    "zh": "留一基准评测的精确匹配 F1（%）"
+  },
+  "t123": {
+    "en": "E2E LOO",
+    "zh": "E2E 留出"
+  },
+  "t124": {
+    "en": "TRACE LOO",
+    "zh": "TRACE 留出"
+  },
+  "t125": {
+    "en": "BATCHING ARROWHEADS",
+    "zh": "多箭头批量查询"
+  },
   "t97": {
-    "en": "1 / Motivation",
-    "zh": "1 / 研究动机"
+    "en": "01 / MOTIVATION",
+    "zh": "01 / 研究动机"
   },
   "t98": {
     "en": "Dense flowcharts make individual arrows easy to miss or reverse.",

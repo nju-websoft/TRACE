@@ -157,6 +157,12 @@ Graph QA uses the modules in `QA/`. Supply question/test-image/graph inputs thro
 
 The page follows the research poster's visual identity: white background, purple titles, pastel section rails, rounded panels, and original poster illustrations and institutional logos. On mobile, vertical rails become horizontal section headers. See [poster artwork notices](docs/assets/poster/README.md) for asset provenance and rights.
 
+Its narrative follows **Motivation → Method → Experiments → Analysis → Resources**.
+Motivation illustrates the two failure modes from the poster; experiments group
+triplet extraction and downstream QA. Analysis uses two questions to present
+cross-domain leave-one-out results and multi-arrowhead batching together.
+Section introductions use 20px text on desktop and 18px on small screens.
+
 ```bash
 python -m http.server 8000 --directory docs
 ```
