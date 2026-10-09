@@ -1,6 +1,6 @@
 # TRACE · Project website
 
-[中文网页](https://nju-websoft.github.io/TRACE/) · [English website](https://nju-websoft.github.io/TRACE/?lang=en) · [Project overview](../README.md)
+[Chinese website](https://nju-websoft.github.io/TRACE/) · [English website](https://nju-websoft.github.io/TRACE/?lang=en) · [Project overview](../README.md)
 
 `docs/index.html` is a static page with local assets. Chinese is the default; the header switches languages, and `?lang=en` opens English directly. GitHub Pages serves the site from `main` → `/docs`.
 

@@ -2,9 +2,7 @@
 
 <img src="docs/assets/readme/trace-cover.svg" alt="TRACE — Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding. Accepted to EMNLP 2026 Main." width="100%">
 
-### 从一支箭头，读懂整张流程图。
-
-**Read the graph. One arrow at a time.**
+### Read the graph. One arrow at a time.
 
 <p>
 <b>Daozhu&nbsp;Dong</b><sup>1</sup> · Kaiwen&nbsp;Shi<sup>1</sup> · Dan&nbsp;Si<sup>2</sup> · Xiaoyu&nbsp;Hao<sup>2</sup> · Tong&nbsp;Liu<sup>2</sup> · Wenjie&nbsp;Zhang<sup>2</sup> · Gong&nbsp;Cheng<sup>1</sup>
@@ -14,13 +12,11 @@
 <sup>2</sup> Lenovo (Beijing) Co., Ltd.
 </p>
 
-[![EMNLP 2026 Main](https://img.shields.io/badge/EMNLP_2026-Main_Conference-493158?style=flat-square)](docs/files/trace-paper.pdf) [![Project website](https://img.shields.io/badge/Project-中文_%7C_English-736186?style=flat-square)](https://nju-websoft.github.io/TRACE/) [![License](https://img.shields.io/badge/Code-Apache_2.0-658d83?style=flat-square)](LICENSE)
+[![EMNLP 2026 Main](https://img.shields.io/badge/EMNLP_2026-Main_Conference-493158?style=flat-square)](docs/files/trace-paper.pdf) [![Project website](https://img.shields.io/badge/Project-Website-736186?style=flat-square)](https://nju-websoft.github.io/TRACE/?lang=en) [![License](https://img.shields.io/badge/Code-Apache_2.0-658d83?style=flat-square)](LICENSE)
 
-**[📄 Paper](docs/files/trace-paper.pdf) · [🖼️ Poster](docs/files/trace-poster.pdf) · [🌐 中文网页](https://nju-websoft.github.io/TRACE/) · [🌐 English website](https://nju-websoft.github.io/TRACE/?lang=en) · [🚀 Quickstart](docs/QUICKSTART.md) · [📜 Citation](#citation)**
+**[📄 Paper](docs/files/trace-paper.pdf) · [🖼️ Poster](docs/files/trace-poster.pdf) · [🌐 Project page](https://nju-websoft.github.io/TRACE/?lang=en) · [🚀 Quickstart](docs/QUICKSTART.md) · [📜 Citation](#citation)**
 
 </div>
-
-TRACE 以箭头头部为视觉锚点，在每份**完整图像**中只标记一个箭头头部，让模型集中恢复指定连接，同时保留周围上下文；逐条提取的 `(source, condition, target)` 三元组最终汇聚为可追溯的有向图。
 
 **TRACE** recovers flowchart connections by detecting arrowheads, highlighting **one arrowhead in the full image**, and asking a fine-tuned vision-language model (VLM) to read that connection. The resulting triplets form a directed graph for downstream reasoning and question answering.
 
@@ -36,7 +32,9 @@ TRACE 以箭头头部为视觉锚点，在每份**完整图像**中只标记一�
 
 <a id="motivation"></a>
 
-## 🧩 01 / Motivation · 为什么连接关系难以恢复？
+## 🧩 01 / Motivation
+
+### Why are flowchart connections hard to recover?
 
 Thin connectors, tiny arrowheads, and dense layouts make flowcharts difficult to read as graphs. Two common approaches face different failure modes:
 
@@ -49,7 +47,7 @@ Thin connectors, tiny arrowheads, and dense layouts make flowcharts difficult to
 
 <a id="method"></a>
 
-## 🏹 02 / Method · 从箭头到有向图
+## 🏹 02 / Method
 
 <p align="center">
 <img src="img/overview.png" alt="TRACE framework: synthesize arrowhead-centered supervision, train the detector and VLM, then detect arrowheads and aggregate per-arrow triplets." width="100%">
@@ -71,13 +69,13 @@ For an illustrative order-fulfillment process, a selected sequence flow becomes:
 (Pack order, partOf, Fulfillment)
 ```
 
-**[Explore the interactive BPMN example →](https://nju-websoft.github.io/TRACE/#method)** Select an arrow to inspect its triplet and lane membership. The example is hand-authored with predefined outputs, not live inference or a benchmark result. [Download its BPMN XML](docs/assets/bpmn-order-fulfillment.bpmn).
+**[Explore the interactive BPMN example →](https://nju-websoft.github.io/TRACE/?lang=en#method)** Select an arrow to inspect its triplet and lane membership. The example is hand-authored with predefined outputs, not live inference or a benchmark result. [Download its BPMN XML](docs/assets/bpmn-order-fulfillment.bpmn).
 
 ---
 
 <a id="experiments"></a>
 
-## 📊 03 / Experiments · 提取与下游问答
+## 📊 03 / Experiments
 
 We evaluate **9 benchmarks** spanning handwritten, digital, business-process, and synthetic flowcharts, with **5 VLM backbones**: Qwen3-VL-4B/8B, MiniCPM-V-4.5-8B, Gemma3-4B-IT, and LLaVA-v1.6-Mistral-7B.
 
@@ -110,7 +108,7 @@ Representative results with **Qwen3-VL-4B**, task-specific fine-tuning, and **ex
 
 </details>
 
-[Compare all five backbones on the project page](https://nju-websoft.github.io/TRACE/#results) · [Download the full results table](docs/assets/results.csv)
+[Compare all five backbones on the project page](https://nju-websoft.github.io/TRACE/?lang=en#results) · [Download the full results table](docs/assets/results.csv)
 
 ### Graph-based question answering
 
@@ -129,7 +127,7 @@ Paper Table 4, evaluated on TextFlow's released subset: **100 FlowLearn images**
 
 <a id="analysis"></a>
 
-## 🔎 04 / Analysis · 用问题展开
+## 🔎 04 / Analysis
 
 ### Q1 · Can TRACE recover connections in an unseen domain?
 
@@ -147,13 +145,13 @@ Multi-arrowhead batching marks **K arrowheads** in a full-image view, trading a 
 
 **K = 3 reduces latency by 39% with a 0.49-point exact-F1 decrease.** These are macro-averages across nine benchmarks using Qwen3-VL-4B on an RTX 5880 Ada (paper Table 10); latency excludes model loading.
 
-[Explore generalization and batching →](https://nju-websoft.github.io/TRACE/#analysis)
+[Explore generalization and batching →](https://nju-websoft.github.io/TRACE/?lang=en#analysis)
 
 ---
 
 <a id="getting-started"></a>
 
-## 🚀 Getting started · 复现入口
+## 🚀 Getting started
 
 ### 1. Install
 
@@ -214,11 +212,11 @@ Datasets, weights, model outputs, logs, and local settings are excluded from git
 
 <a id="resources"></a>
 
-## 📚 05 / Resources · 进一步了解 TRACE
+## 📚 05 / Resources
 
 | Paper | Poster | Project page | Data record |
 |:--|:--|:--|:--|
-| [Read PDF](docs/files/trace-paper.pdf) | [View poster](docs/files/trace-poster.pdf) | [中文](https://nju-websoft.github.io/TRACE/) / [English](https://nju-websoft.github.io/TRACE/?lang=en) | [Zenodo record](https://doi.org/10.5281/zenodo.20374997) |
+| [Read PDF](docs/files/trace-paper.pdf) | [View poster](docs/files/trace-poster.pdf) | [English](https://nju-websoft.github.io/TRACE/?lang=en) / [Chinese](https://nju-websoft.github.io/TRACE/) | [Zenodo record](https://doi.org/10.5281/zenodo.20374997) |
 | Method, comparisons, and ablations | Visual research overview | Interactive BPMN example and results | Synthesized supervision and arrowhead annotations |
 
 Consult the data record for current file availability and access instructions. Benchmark-derived data retain their upstream terms; this code release does not change data permissions.
