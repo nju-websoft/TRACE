@@ -153,7 +153,7 @@ Graph QA uses the modules in `QA/`. Supply question/test-image/graph inputs thro
 
 ## Bilingual project page
 
-`docs/index.html` is a static page with local assets. **Chinese is the default**; the header switches languages, and `?lang=en` opens English directly. It includes the method diagram, a predefined arrow-query illustration, five-backbone results, QA, batching, PDFs, and citation copying. It does not call a live model. The poster QR code stays pointed at https://github.com/nju-websoft/TRACE.
+`docs/index.html` is a static page with local assets. **Chinese is the default**; the header switches languages, and `?lang=en` opens English directly. It includes the method diagram, an interactive BPMN order-fulfillment illustration with two lanes and an exclusive gateway, five-backbone results, QA, batching, PDFs, and citation copying. Selecting any of seven sequence flows shows its triplet and endpoint `partOf` lane relations. The hand-authored [BPMN source](docs/assets/bpmn-order-fulfillment.bpmn) is downloadable; the demo uses predefined outputs, not a live model or benchmark result. The poster QR code stays pointed at https://github.com/nju-websoft/TRACE.
 
 The page follows the research poster's visual identity: white background, purple titles, pastel section rails, rounded panels, and original poster illustrations and institutional logos. On mobile, vertical rails become horizontal section headers. See [poster artwork notices](docs/assets/poster/README.md) for asset provenance and rights.
 

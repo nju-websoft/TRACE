@@ -10,11 +10,47 @@ const results = {
 };
 function updateResults(){const value=results[document.getElementById('backbone').value];const unit=typeof currentLanguage!=='undefined'&&currentLanguage==='zh'?'个百分点':'pp';document.getElementById('results-body').innerHTML=benchmarkNames.map((name,i)=>{const gain=value.trace[i]-value.e2e[i];return `<tr><th scope="row">${name}</th><td>${value.e2e[i].toFixed(2)}</td><td class="trace-score">${value.trace[i].toFixed(2)}</td><td class="${gain>=0?'gain-positive':'gain-negative'}">${gain>=0?'+':'−'}${Math.abs(gain).toFixed(2)} ${unit}</td></tr>`}).join('')}
 document.getElementById('backbone').addEventListener('change',updateResults);updateResults();
-const edges=[{triplet:'(Start, connectedTo, Read input)',box:[283,78]},{triplet:'(Read input, connectedTo, Valid?)',box:[283,169]},{triplet:'(Valid?, Yes, Process)',box:[123,264]},{triplet:'(Valid?, No, Reject)',box:[443,264]},{triplet:'(Process, connectedTo, End)',box:[235,368]},{triplet:'(Reject, connectedTo, End)',box:[331,368]}];
+// Hand-authored BPMN illustration, not a benchmark sample or live model output.
+const bpmnLanes={sales:{zh:'销售',en:'Sales'},fulfillment:{zh:'物流',en:'Fulfillment'}};
+const bpmnNodes={
+  start:{zh:'收到订单',en:'Order received',lane:'sales'},
+  validate:{zh:'核验订单',en:'Validate order',lane:'sales'},
+  gateway:{zh:'有库存？',en:'In stock?',lane:'sales'},
+  pack:{zh:'打包订单',en:'Pack order',lane:'fulfillment'},
+  ship:{zh:'发货',en:'Ship order',lane:'fulfillment'},
+  cancel:{zh:'取消订单',en:'Cancel order',lane:'sales'},
+  completed:{zh:'已完成',en:'Completed',lane:'fulfillment'},
+  cancelled:{zh:'已取消',en:'Cancelled',lane:'sales'}
+};
+const edges=[
+  {source:'start',target:'validate',condition:null,box:[194,94]},
+  {source:'validate',target:'gateway',condition:null,box:[370,94]},
+  {source:'gateway',target:'pack',condition:{zh:'是',en:'Yes'},box:[279,258]},
+  {source:'gateway',target:'cancel',condition:{zh:'否',en:'No'},box:[482,94]},
+  {source:'pack',target:'ship',condition:null,box:[414,293]},
+  {source:'ship',target:'completed',condition:null,box:[634,293]},
+  {source:'cancel',target:'cancelled',condition:null,box:[666,94]}
+];
+function demoLanguage(){return typeof currentLanguage!=='undefined'&&currentLanguage==='zh'?'zh':'en'}
+function edgeTriplet(edge,language=demoLanguage()){return `(${bpmnNodes[edge.source][language]}, ${edge.condition?edge.condition[language]:'connectedTo'}, ${bpmnNodes[edge.target][language]})`}
+function membershipTriplet(node,language=demoLanguage()){return `(${node[language]}, partOf, ${bpmnLanes[node.lane][language]})`}
 const edgeControls=document.getElementById('edge-controls');
 let selectedEdge=0;
-edges.forEach((edge,i)=>{const button=document.createElement('button');button.type='button';button.textContent=`Edge ${i+1}`;button.setAttribute('aria-label',`Highlight edge ${i+1}: ${edge.triplet}`);button.setAttribute('aria-pressed',String(i===0));button.addEventListener('click',()=>selectEdge(i));edgeControls.appendChild(button)});
-function selectEdge(i){selectedEdge=i;const rect=document.getElementById('arrow-highlight');rect.setAttribute('x',edges[i].box[0]);rect.setAttribute('y',edges[i].box[1]);document.getElementById('triplet-value').textContent=typeof currentLanguage!=='undefined'&&currentLanguage==='zh'?chineseTriplets[i]:edges[i].triplet;Array.from(edgeControls.children).forEach((button,j)=>button.setAttribute('aria-pressed',String(i===j)))}selectEdge(0);
+edges.forEach((edge,i)=>{const button=document.createElement('button');button.type='button';button.textContent=`Edge ${i+1}`;button.addEventListener('click',()=>selectEdge(i));edgeControls.appendChild(button)});
+document.querySelectorAll('.bpmn-edge-hit').forEach(path=>{const choose=()=>selectEdge(Number(path.dataset.edge));path.addEventListener('click',choose);path.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();choose()}})});
+function selectEdge(i){
+  selectedEdge=i;
+  const language=demoLanguage(),edge=edges[i],rect=document.getElementById('arrow-highlight');
+  rect.setAttribute('x',edge.box[0]);rect.setAttribute('y',edge.box[1]);
+  document.getElementById('triplet-value').textContent=edgeTriplet(edge,language);
+  document.getElementById('source-membership').textContent=membershipTriplet(bpmnNodes[edge.source],language);
+  document.getElementById('target-membership').textContent=membershipTriplet(bpmnNodes[edge.target],language);
+  Array.from(edgeControls.children).forEach((button,j)=>{button.setAttribute('aria-pressed',String(i===j));button.setAttribute('aria-label',`${language==='zh'?'高亮边':'Highlight edge'} ${j+1}: ${edgeTriplet(edges[j],language)}`)});
+  document.querySelectorAll('.bpmn-sequence-flow').forEach(path=>path.classList.toggle('is-selected',Number(path.dataset.edge)===i));
+  document.querySelectorAll('.bpmn-edge-hit').forEach(path=>{path.setAttribute('aria-pressed',String(Number(path.dataset.edge)===i));path.setAttribute('aria-label',`${language==='zh'?'选择边':'Select edge'} ${Number(path.dataset.edge)+1}: ${edgeTriplet(edges[Number(path.dataset.edge)],language)}`)});
+  const canvas=document.querySelector('.bpmn-canvas'),diagram=canvas.querySelector('svg');
+  if(canvas.scrollWidth>canvas.clientWidth){const scale=diagram.getBoundingClientRect().width/800;canvas.scrollTo({left:Math.max(0,(edge.box[0]+17)*scale-canvas.clientWidth/2),behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+}selectEdge(0);
 const batching={1:{seconds:4.00,f1:83.30,rf1:86.52},2:{seconds:2.78,f1:82.92,rf1:86.08},3:{seconds:2.44,f1:82.81,rf1:85.84}};
 let selectedK=1;
 function updateBatching(k){selectedK=k;const data=batching[k];document.getElementById('k-label').textContent=typeof currentLanguage!=='undefined'?interfaceText[currentLanguage].kLabel(k):`${k} arrowhead${k===1?'':'s'} per query`;document.getElementById('latency-value').textContent=data.seconds.toFixed(2);document.getElementById('latency-bar').style.width=`${data.seconds/4*100}%`;document.getElementById('k-f1').textContent=data.f1.toFixed(2);document.getElementById('k-rf1').textContent=data.rf1.toFixed(2);document.getElementById('k-speed').textContent=`${(4/data.seconds).toFixed(2)}×`;document.querySelectorAll('[data-k]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.k)===k)))}

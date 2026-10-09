@@ -4,7 +4,6 @@ const interfaceText = {
   zh:{edge:'边',highlight:'高亮边',backbone:'模型骨干',pp:'个百分点',kLabel:k=>`每次查询 ${k} 个箭头头部`,copied:'引用已复制。',copyFallback:'引用已选中，请按 Ctrl+C 或 Cmd+C 复制。'},
   en:{edge:'Edge',highlight:'Highlight edge',backbone:'Backbone',pp:'pp',kLabel:k=>`${k} arrowhead${k===1?'':'s'} per query`,copied:'Citation copied.',copyFallback:'Citation selected. Press Ctrl+C or Cmd+C to copy.'}
 };
-const chineseTriplets=['(开始, connectedTo, 读取输入)','(读取输入, connectedTo, 有效？)','(有效？, 是, 处理)','(有效？, 否, 拒绝)','(处理, connectedTo, 结束)','(拒绝, connectedTo, 结束)'];
 function setLanguage(language){
   currentLanguage=language==='en'?'en':'zh';
   document.documentElement.lang=currentLanguage==='zh'?'zh-CN':'en';
@@ -12,8 +11,9 @@ function setLanguage(language){
   const text=interfaceText[currentLanguage];
   document.getElementById('backbone-label').textContent=text.backbone;
   document.querySelectorAll('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===currentLanguage)));
-  document.getElementById('edge-controls').setAttribute('aria-label',currentLanguage==='zh'?'选择流程图中的边':'Select a flowchart edge');
-  document.querySelector('.demo-visual svg').setAttribute('aria-label',currentLanguage==='zh'?'示意流程图：开始、读取输入、有效性判断、处理或拒绝、结束。':'Illustrative flowchart: Start, Read input, Valid decision, Process or Reject, and End.');
+  document.getElementById('edge-controls').setAttribute('aria-label',currentLanguage==='zh'?'选择 BPMN 顺序流中的箭头':'Select a BPMN sequence flow');
+  document.querySelector('.demo-visual svg').setAttribute('aria-label',currentLanguage==='zh'?'订单履约 BPMN 示意图：销售与物流两条泳道；核验订单后通过排他网关判断库存，有库存则打包并发货，否则取消订单。':'Order fulfillment BPMN illustration with Sales and Fulfillment lanes: validate the order, check stock at an exclusive gateway, then pack and ship or cancel.');
+  document.querySelector('.bpmn-canvas').setAttribute('aria-label',currentLanguage==='zh'?'BPMN 流程图；小屏可横向滚动':'BPMN diagram; scroll horizontally on small screens');
   document.querySelector('.k-controls').setAttribute('aria-label',currentLanguage==='zh'?'每次查询的箭头头部数量':'Number of arrowheads per query');
   Array.from(edgeControls.children).forEach((button,i)=>{button.textContent=`${text.edge} ${i+1}`;button.setAttribute('aria-label',`${text.highlight} ${i+1}`)});
   updateResults();selectEdge(selectedEdge);updateBatching(selectedK);

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-authored website illustration, not a TRACE benchmark sample. -->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  id="Definitions_Order" targetNamespace="https://nju-websoft.github.io/TRACE/examples">
+  <bpmn:collaboration id="Collaboration_Order">
+    <bpmn:participant id="Pool_Order" name="Order fulfillment" processRef="Process_Order"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Order" name="Order fulfillment" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Order">
+      <bpmn:lane id="Lane_Sales" name="Sales">
+        <bpmn:flowNodeRef>Event_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Stock</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Cancel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_Cancelled</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fulfillment" name="Fulfillment">
+        <bpmn:flowNodeRef>Task_Pack</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Ship</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_Completed</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Event_Start" name="Order received"><bpmn:outgoing>Flow_StartValidate</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:task id="Task_Validate" name="Validate order"><bpmn:incoming>Flow_StartValidate</bpmn:incoming><bpmn:outgoing>Flow_ValidateStock</bpmn:outgoing></bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Stock" name="In stock?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_ValidateStock</bpmn:incoming>
+      <bpmn:outgoing>Flow_StockPack</bpmn:outgoing><bpmn:outgoing>Flow_StockCancel</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Cancel" name="Cancel order"><bpmn:incoming>Flow_StockCancel</bpmn:incoming><bpmn:outgoing>Flow_CancelEnd</bpmn:outgoing></bpmn:task>
+    <bpmn:endEvent id="Event_Cancelled" name="Cancelled"><bpmn:incoming>Flow_CancelEnd</bpmn:incoming></bpmn:endEvent>
+    <bpmn:task id="Task_Pack" name="Pack order"><bpmn:incoming>Flow_StockPack</bpmn:incoming><bpmn:outgoing>Flow_PackShip</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="Task_Ship" name="Ship order"><bpmn:incoming>Flow_PackShip</bpmn:incoming><bpmn:outgoing>Flow_ShipEnd</bpmn:outgoing></bpmn:task>
+    <bpmn:endEvent id="Event_Completed" name="Completed"><bpmn:incoming>Flow_ShipEnd</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_StartValidate" sourceRef="Event_Start" targetRef="Task_Validate"/>
+    <bpmn:sequenceFlow id="Flow_ValidateStock" sourceRef="Task_Validate" targetRef="Gateway_Stock"/>
+    <bpmn:sequenceFlow id="Flow_StockPack" name="Yes" sourceRef="Gateway_Stock" targetRef="Task_Pack"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">stockAvailable</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_StockCancel" name="No" sourceRef="Gateway_Stock" targetRef="Task_Cancel"><bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">not stockAvailable</bpmn:conditionExpression></bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_PackShip" sourceRef="Task_Pack" targetRef="Task_Ship"/>
+    <bpmn:sequenceFlow id="Flow_ShipEnd" sourceRef="Task_Ship" targetRef="Event_Completed"/>
+    <bpmn:sequenceFlow id="Flow_CancelEnd" sourceRef="Task_Cancel" targetRef="Event_Cancelled"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Order">
+    <bpmndi:BPMNPlane id="Plane_Order" bpmnElement="Collaboration_Order">
+      <bpmndi:BPMNShape id="Shape_Pool" bpmnElement="Pool_Order" isHorizontal="true"><dc:Bounds x="20" y="22" width="760" height="380"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Sales" bpmnElement="Lane_Sales" isHorizontal="true"><dc:Bounds x="52" y="22" width="728" height="188"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Fulfillment" bpmnElement="Lane_Fulfillment" isHorizontal="true"><dc:Bounds x="52" y="210" width="728" height="192"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start" bpmnElement="Event_Start"><dc:Bounds x="130" y="90" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Validate" bpmnElement="Task_Validate"><dc:Bounds x="212" y="76" width="128" height="64"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Stock" bpmnElement="Gateway_Stock" isMarkerVisible="true"><dc:Bounds x="388" y="81" width="54" height="54"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Cancel" bpmnElement="Task_Cancel"><dc:Bounds x="500" y="76" width="132" height="64"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Cancelled" bpmnElement="Event_Cancelled"><dc:Bounds x="684" y="90" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Pack" bpmnElement="Task_Pack"><dc:Bounds x="220" y="276" width="150" height="62"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Ship" bpmnElement="Task_Ship"><dc:Bounds x="432" y="276" width="150" height="62"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Completed" bpmnElement="Event_Completed"><dc:Bounds x="652" y="289" width="36" height="36"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_StartValidate" bpmnElement="Flow_StartValidate"><di:waypoint x="166" y="108"/><di:waypoint x="212" y="108"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_ValidateStock" bpmnElement="Flow_ValidateStock"><di:waypoint x="340" y="108"/><di:waypoint x="388" y="108"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_StockPack" bpmnElement="Flow_StockPack"><di:waypoint x="415" y="135"/><di:waypoint x="415" y="236"/><di:waypoint x="295" y="236"/><di:waypoint x="295" y="276"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_StockCancel" bpmnElement="Flow_StockCancel"><di:waypoint x="442" y="108"/><di:waypoint x="500" y="108"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_PackShip" bpmnElement="Flow_PackShip"><di:waypoint x="370" y="307"/><di:waypoint x="432" y="307"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_ShipEnd" bpmnElement="Flow_ShipEnd"><di:waypoint x="582" y="307"/><di:waypoint x="652" y="307"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_CancelEnd" bpmnElement="Flow_CancelEnd"><di:waypoint x="632" y="108"/><di:waypoint x="684" y="108"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

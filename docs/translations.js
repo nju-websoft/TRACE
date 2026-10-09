@@ -124,48 +124,48 @@ const translations = {
     "zh": "离线阶段合成数据并训练模型；在线阶段检测箭头头部并提取三元组。来源：论文图 1。"
   },
   "t31": {
-    "en": "EXPLORE THE QUERY",
-    "zh": "交互示例 · 理解查询方式"
+    "en": "BPMN / ORDER FULFILLMENT",
+    "zh": "交互示例 · BPMN 订单履约"
   },
   "t32": {
     "en": "Pick an arrowhead.<br/>Follow its triplet.",
     "zh": "选择一个箭头，<br>查看对应三元组。"
   },
   "t33": {
-    "en": "This illustrative flowchart shows the query format. Selecting an edge moves the blue highlight; the full diagram stays visible.",
-    "zh": "下方示意图展示 TRACE 的查询方式。点击不同的边，蓝色高亮框随之移动，完整流程图始终可见。"
+    "en": "Sales and Fulfillment occupy separate lanes. After validation, an in-stock order is packed and shipped; otherwise it is cancelled. Select an edge button or a connector to highlight its arrowhead and inspect the connection and lane membership.",
+    "zh": "销售与物流分属两条泳道。核验订单后，有库存则打包并发货，否则取消订单。点击边按钮或图中的连线，蓝色框会定位箭头头部，同时显示连接关系和泳道归属。"
   },
   "t34": {
-    "en": "Illustrative example. Outputs are predefined to explain the method.",
-    "zh": "此处为方法示意，输出预先设定，不调用在线模型。"
+    "en": "Hand-authored BPMN illustration with predefined outputs. No live model call; this is not a benchmark result.",
+    "zh": "自行绘制的 BPMN 方法示意，输出预先设定，不调用在线模型，也不作为基准测试结果。"
   },
   "t35": {
     "en": "RECOVERED TRIPLET",
     "zh": "提取出的三元组"
   },
   "t36": {
-    "en": "Start",
-    "zh": "开始"
+    "en": "Order received",
+    "zh": "收到订单"
   },
   "t37": {
-    "en": "Read input",
-    "zh": "读取输入"
+    "en": "Validate order",
+    "zh": "核验订单"
   },
   "t38": {
-    "en": "Valid?",
-    "zh": "有效？"
+    "en": "In stock?",
+    "zh": "有库存？"
   },
   "t39": {
-    "en": "Process",
-    "zh": "处理"
+    "en": "Pack order",
+    "zh": "打包订单"
   },
   "t40": {
-    "en": "Reject",
-    "zh": "拒绝"
+    "en": "Cancel order",
+    "zh": "取消订单"
   },
   "t41": {
-    "en": "End",
-    "zh": "结束"
+    "en": "Completed",
+    "zh": "已完成"
   },
   "t42": {
     "en": "Yes",
@@ -366,6 +366,42 @@ const translations = {
   "t91": {
     "en": "Nanjing University · Lenovo<br/><a href=\"mailto:gcheng@nju.edu.cn\">gcheng@nju.edu.cn</a>",
     "zh": "南京大学 · 联想<br><a href='mailto:gcheng@nju.edu.cn'>gcheng@nju.edu.cn</a>"
+  },
+  "t99": {
+    "en": "Ship order",
+    "zh": "发货"
+  },
+  "t100": {
+    "en": "Cancelled",
+    "zh": "已取消"
+  },
+  "t101": {
+    "en": "Sales",
+    "zh": "销售"
+  },
+  "t102": {
+    "en": "Fulfillment",
+    "zh": "物流"
+  },
+  "t103": {
+    "en": "Order fulfillment",
+    "zh": "订单履约"
+  },
+  "t104": {
+    "en": "Endpoint lane membership",
+    "zh": "端点的泳道归属"
+  },
+  "t105": {
+    "en": "Start/end events · Tasks · Exclusive gateway · Lanes",
+    "zh": "开始/结束事件 · 任务 · 排他网关 · 泳道"
+  },
+  "t106": {
+    "en": "On small screens, scroll horizontally to explore the complete BPMN diagram.",
+    "zh": "小屏可横向滑动查看完整 BPMN 图。"
+  },
+  "t107": {
+    "en": "Download BPMN source",
+    "zh": "下载 BPMN 源文件"
   },
   "t97": {
     "en": "1 / Motivation",

@@ -26,7 +26,81 @@
 <div class="section-heading"><p class="eyebrow" data-i18n="t21">02 / 核心方法</p><h2 data-i18n="t22">局部的视觉锚点，<br/>完整的全局上下文。</h2><p data-i18n="t23">细小连线和密集布局让整图抽取容易遗漏或反转边的方向。TRACE 在每份完整图像中只标记一个箭头头部，让模型集中读取指定连接，同时保留周围信息。</p></div>
 <div class="steps"><article><img class="step-rabbit" src="assets/poster/rabbit-study.png" alt="" width="466" height="576" loading="lazy"/><span class="step-number">1</span><h3 data-i18n="t24">合成数据与模型训练</h3><p data-i18n="t25">解析原生流程图文件，自动获得箭头头部框与图像—三元组对，用于微调检测器和视觉语言模型。</p></article><article><img class="step-rabbit" src="assets/poster/rabbit-detect.png" alt="" width="693" height="633" loading="lazy"/><span class="step-number">2</span><h3 data-i18n="t26">检测与视觉标记</h3><p data-i18n="t27">定位箭头头部并绘制高亮框。每次查询都使用完整流程图，保留全局上下文。</p></article><article><img class="step-rabbit" src="assets/poster/rabbit-trace.png" alt="" width="681" height="623" loading="lazy"/><span class="step-number">3</span><h3 data-i18n="t28">追踪与三元组汇聚</h3><p data-i18n="t29">读取标记箭头对应的起点、条件和终点，将逐条输出汇聚成流程图的结构化表示。</p></article></div>
 <figure class="overview"><img alt="TRACE 框架：原生流程图文件生成训练数据，箭头检测引导完整图像上的局部三元组抽取。" height="2250" loading="lazy" src="assets/overview.png" width="4001"/><figcaption data-i18n="t30">离线阶段合成数据并训练模型；在线阶段检测箭头头部并提取三元组。来源：论文图 1。</figcaption></figure>
-<div class="demo-panel"><div class="demo-copy"><p class="eyebrow" data-i18n="t31">交互示例 · 理解查询方式</p><h3 data-i18n="t32">选择一个箭头，<br/>查看对应三元组。</h3><p data-i18n="t33">下方示意图展示 TRACE 的查询方式。点击不同的边，蓝色高亮框随之移动，完整流程图始终可见。</p><div aria-label="Select a flowchart edge" class="edge-controls" id="edge-controls"></div><p class="demo-note" data-i18n="t34">此处为方法示意，输出预先设定，不调用在线模型。</p></div><div class="demo-visual"><svg aria-label="Illustrative flowchart: Start, Read input, Valid decision, Process or Reject, and End." role="img" viewbox="0 0 600 440"><defs><marker id="arrow" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4"><path d="M0 0L8 4L0 8z" fill="#69768d"></path></marker></defs><g class="flow-edges" fill="none" marker-end="url(#arrow)" stroke="#69768d" stroke-width="2"><path d="M300 61V96"></path><path d="M300 150V188"></path><path d="M240 231H140V281"></path><path d="M360 231H460V281"></path><path d="M140 335V382H253"></path><path d="M460 335V382H347"></path></g><g class="flow-nodes"><rect height="44" rx="22" width="110" x="245" y="17"></rect><rect height="51" rx="4" width="154" x="223" y="99"></rect><path d="M300 184L362 231L300 278L238 231Z"></path><rect height="51" rx="4" width="150" x="65" y="284"></rect><rect height="51" rx="4" width="150" x="385" y="284"></rect><rect height="46" rx="23" width="90" x="255" y="359"></rect></g><g class="flow-labels" text-anchor="middle"><text data-i18n="t36" x="300" y="45">开始</text><text data-i18n="t37" x="300" y="130">读取输入</text><text data-i18n="t38" x="300" y="237">有效？</text><text data-i18n="t39" x="140" y="315">处理</text><text data-i18n="t40" x="460" y="315">拒绝</text><text data-i18n="t41" x="300" y="388">结束</text><text class="edge-label" data-i18n="t42" x="186" y="220">是</text><text class="edge-label" data-i18n="t43" x="414" y="220">否</text></g><rect fill="none" height="28" id="arrow-highlight" rx="2" stroke="#2463eb" stroke-width="3" width="34" x="283" y="78"></rect></svg><div aria-live="polite" class="triplet-output"><span data-i18n="t35">提取出的三元组</span><code id="triplet-value"></code></div></div></div>
+<div class="demo-panel bpmn-demo">
+<div class="demo-copy">
+<p class="eyebrow" data-i18n="t31">交互示例 · BPMN 订单履约</p>
+<h3 data-i18n="t32">选择一个箭头，<br/>查看对应三元组。</h3>
+<p data-i18n="t33">销售与物流分属两条泳道。核验订单后，有库存则打包并发货，否则取消订单。点击边按钮或图中的连线，蓝色框会定位箭头头部，同时显示连接关系和泳道归属。</p>
+<div aria-label="选择 BPMN 顺序流中的箭头" class="edge-controls" id="edge-controls"></div>
+<p class="demo-note" data-i18n="t34">自行绘制的 BPMN 方法示意，输出预先设定，不调用在线模型，也不作为基准测试结果。</p>
+<a class="demo-download" href="assets/bpmn-order-fulfillment.bpmn" download="" data-i18n="t107">下载 BPMN 源文件</a>
+</div>
+<div class="demo-visual">
+<div class="bpmn-canvas" role="region" tabindex="0" aria-label="BPMN 流程图；小屏可横向滚动">
+<svg class="bpmn-diagram" aria-label="订单履约 BPMN 示意图：销售与物流两条泳道，库存判断后打包发货或取消订单。" role="img" viewBox="0 0 800 430">
+<defs><marker id="bpmn-arrow" markerWidth="9" markerHeight="9" orient="auto" refX="7" refY="4"><path d="M0 0L8 4L0 8z" fill="#627782"/></marker></defs>
+<g class="bpmn-pool">
+<rect x="20" y="22" width="760" height="380" rx="3" fill="#fff"/>
+<rect x="52" y="22" width="728" height="188" class="bpmn-sales-lane"/>
+<rect x="52" y="210" width="728" height="192" class="bpmn-fulfillment-lane"/>
+<path d="M52 22V402M104 22V402M52 210H780" fill="none"/>
+<rect x="20" y="22" width="760" height="380" rx="3" fill="none"/>
+</g>
+<g class="bpmn-lane-labels" text-anchor="middle">
+<text transform="translate(40 212) rotate(-90)" data-i18n="t103">订单履约</text>
+<text transform="translate(83 116) rotate(-90)" data-i18n="t101">销售</text>
+<text transform="translate(83 306) rotate(-90)" data-i18n="t102">物流</text>
+</g>
+<g class="flow-edges" fill="none" marker-end="url(#bpmn-arrow)" stroke="#627782" stroke-width="2">
+<path class="bpmn-sequence-flow" data-edge="0" d="M166 108H212"/>
+<path class="bpmn-sequence-flow" data-edge="1" d="M340 108H388"/>
+<path class="bpmn-sequence-flow" data-edge="2" d="M415 135V236H295V276"/>
+<path class="bpmn-sequence-flow" data-edge="3" d="M442 108H500"/>
+<path class="bpmn-sequence-flow" data-edge="4" d="M370 307H432"/>
+<path class="bpmn-sequence-flow" data-edge="5" d="M582 307H652"/>
+<path class="bpmn-sequence-flow" data-edge="6" d="M632 108H684"/>
+</g>
+<g class="bpmn-hit-areas" fill="none" stroke="transparent" stroke-width="18">
+<path class="bpmn-edge-hit" data-edge="0" d="M166 108H212" role="button" tabindex="0"/>
+<path class="bpmn-edge-hit" data-edge="1" d="M340 108H388" role="button" tabindex="0"/>
+<path class="bpmn-edge-hit" data-edge="2" d="M415 135V236H295V276" role="button" tabindex="0"/>
+<path class="bpmn-edge-hit" data-edge="3" d="M442 108H500" role="button" tabindex="0"/>
+<path class="bpmn-edge-hit" data-edge="4" d="M370 307H432" role="button" tabindex="0"/>
+<path class="bpmn-edge-hit" data-edge="5" d="M582 307H652" role="button" tabindex="0"/>
+<path class="bpmn-edge-hit" data-edge="6" d="M632 108H684" role="button" tabindex="0"/>
+</g>
+<g class="flow-nodes bpmn-nodes">
+<circle class="bpmn-start-event" cx="148" cy="108" r="18"/>
+<rect x="212" y="76" width="128" height="64" rx="10"/>
+<path class="bpmn-exclusive-gateway" d="M415 81L442 108L415 135L388 108Z"/>
+<path class="bpmn-gateway-marker" d="M406 99L424 117M424 99L406 117"/>
+<rect x="500" y="76" width="132" height="64" rx="10"/>
+<circle class="bpmn-end-event" cx="702" cy="108" r="18"/>
+<rect x="220" y="276" width="150" height="62" rx="10"/>
+<rect x="432" y="276" width="150" height="62" rx="10"/>
+<circle class="bpmn-end-event" cx="670" cy="307" r="18"/>
+</g>
+<g class="flow-labels bpmn-labels" text-anchor="middle">
+<text data-i18n="t36" x="157" y="157">收到订单</text>
+<text data-i18n="t37" x="276" y="114">核验订单</text>
+<text data-i18n="t38" x="415" y="61">有库存？</text>
+<text data-i18n="t40" x="566" y="114">取消订单</text>
+<text data-i18n="t100" x="702" y="157">已取消</text>
+<text data-i18n="t39" x="295" y="313">打包订单</text>
+<text data-i18n="t99" x="507" y="313">发货</text>
+<text data-i18n="t41" x="670" y="358">已完成</text>
+<text class="edge-label" data-i18n="t42" x="438" y="192">是</text>
+<text class="edge-label" data-i18n="t43" x="470" y="91">否</text>
+</g>
+<rect fill="none" height="28" id="arrow-highlight" rx="3" stroke="#2463eb" stroke-width="3" width="34" x="194" y="94" pointer-events="none"/>
+</svg>
+</div>
+<p class="bpmn-legend"><span class="legend-event" aria-hidden="true"></span><span class="legend-task" aria-hidden="true"></span><span class="legend-gateway" aria-hidden="true">+</span><span data-i18n="t105">开始/结束事件 · 任务 · 排他网关 · 泳道</span></p>
+<p class="bpmn-scroll-note" data-i18n="t106">小屏可横向滑动查看完整 BPMN 图。</p>
+<div aria-live="polite" class="triplet-output"><span data-i18n="t35">提取出的三元组</span><code id="triplet-value"></code></div>
+<div aria-live="polite" class="containment-output"><span data-i18n="t104">端点的泳道归属</span><code id="source-membership"></code><code id="target-membership"></code></div>
+</div>
+</div>
 </section>
 <section class="results-section" id="results"><div class="container section poster-panel results-panel"><div class="poster-rail"><span class="rail-number">3</span><span class="rail-label" data-i18n="t2">结果</span></div><img class="section-rabbit" src="assets/poster/rabbit-results.png" alt="" width="722" height="628" loading="lazy"/><div class="section-heading"><p class="eyebrow" data-i18n="t44">03 / 实验结果</p><h2 data-i18n="t45">跨越视觉风格，<br/>恢复流程图结构。</h2><p data-i18n="t46">九个基准覆盖手绘图、常规流程图、具有层级结构的 BPMN，以及不同复杂度的生成图。下表比较相同骨干下微调后的 TRACE 与整图端到端抽取。</p></div><div class="results-toolbar"><h3 data-i18n="t47">三元组提取</h3><label for="backbone"><span id="backbone-label">模型骨干</span> <select id="backbone"><option value="qwen4">Qwen3-VL-4B</option><option value="qwen8">Qwen3-VL-8B</option><option value="minicpm">MiniCPM-V-4.5-8B</option><option value="gemma">Gemma3-4B-IT</option><option value="llava">LLaVA-v1.6-Mistral-7B</option></select></label></div><div aria-label="Triplet extraction results" class="table-scroll" role="region" tabindex="0"><table><caption class="sr-only">Exact triplet F1, in percent. Fine-tuned TRACE and fine-tuned end-to-end extraction, paper Table 2.</caption><thead><tr><th data-i18n="t48" scope="col">评测基准</th><th data-i18n="t49" scope="col">端到端 F1</th><th data-i18n="t50" scope="col">TRACE F1</th><th data-i18n="t51" scope="col">差值</th></tr></thead><tbody id="results-body"></tbody></table></div><p class="source-note" data-i18n="t52">精确匹配 F1（%），来源：论文表 2。两种方法均经过任务微调。此处展示论文报告结果。<a download="" href="assets/results.csv">下载结果表</a></p><noscript><p data-i18n="t53">交互结果表需要 JavaScript。可<a href="assets/results.csv">查看 CSV 数据</a>，或阅读论文表 2。</p></noscript>
 <div class="evidence-grid"><article><p class="eyebrow" data-i18n="t54">跨风格泛化</p><h3 data-i18n="t55">在 <span class="accent">8 / 9</span> 个未见基准上，<br/>获得更高的 F1。</h3><p data-i18n="t56">在八个基准上训练，测试被留出的第九个基准。TRACE 在其中八个上优于 E2E；CBD 是例外（83.31 对 83.66 F1）。</p><div class="mini-comparison"><span data-i18n="t57">FlowGen-medium · 留出测试</span><div><span>E2E</span><meter max="100" min="0" value="65.21">65.21</meter><strong>65.21</strong></div><div><span>TRACE</span><meter class="trace-meter" max="100" min="0" value="79.55">79.55</meter><strong>79.55</strong></div></div><p class="source-note" data-i18n="t58">Qwen3-VL-4B，无 OCR 后处理。来源：论文附录 B、研究海报。</p></article><article><p class="eyebrow" data-i18n="t59">下游推理</p><h3 data-i18n="t60">从结构化图，<br/>到流程问答。</h3><div class="table-scroll"><table class="qa-table"><caption class="sr-only" data-i18n="t61">下游问答准确率（%）</caption><thead><tr><th data-i18n="t62">方法</th><th>FlowLearn</th><th>FlowVQA</th></tr></thead><tbody><tr><th scope="row">Qwen3-VL-4B (ZS)</th><td>66.83</td><td>62.03</td></tr><tr><th data-i18n="t63" scope="row">TextFlow + 真值文本</th><td>88.33</td><td>75.18</td></tr><tr class="trace-row"><th data-i18n="t64" scope="row">TRACE + 工具调用</th><td>98.17</td><td>75.78</td></tr><tr><th data-i18n="t65" scope="row">真值三元组（上界）</th><td>100.00</td><td>78.46</td></tr></tbody></table></div><p class="source-note" data-i18n="t66">推理骨干均为 Qwen3-VL-4B；TextFlow 输入真值 Mermaid 文本。公开子集包含 100 张 FlowLearn 和 197 张 FlowVQA 图像。来源：论文表 4。</p></article></div>
