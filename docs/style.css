@@ -229,9 +229,11 @@ meter.trace-meter::-moz-meter-bar { background: #239aa0; }
 .latency-stats span { font-size: .75rem; color: var(--muted); display: block; }
 .latency-card .source-note { margin-bottom: 0; margin-top: 23px; }
 .resource-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 28px 0 32px; }
-.resource-grid a { padding: 22px 18px; border: 1px solid #d9cce0; background: #fcfafd; text-decoration: none; border-radius: 12px; display: flex; flex-direction: column; transition: border-color .2s; }
-.resource-grid a:hover { border-color: var(--purple); }
-.resource-grid a > span { font-size: .85rem; font-weight: 700; color: #917a9c; margin-bottom: 15px; }
+.resource-grid > .resource-card { padding: 22px 18px; border: 1px solid #d9cce0; background: #fcfafd; text-decoration: none; border-radius: 12px; display: flex; flex-direction: column; transition: border-color .2s; }
+.resource-grid > .resource-card:hover { border-color: var(--purple); }
+.resource-grid > .resource-card > span { font-size: .85rem; font-weight: 700; color: #917a9c; margin-bottom: 15px; }
+/* Keep browser-injected DOI/Sci-Hub links out of the four-card resource grid. */
+.resource-grid > :not(.resource-card), .resource-grid a:not(.resource-card) { display: none !important; }
 .resource-grid h3 { color: var(--purple); font-size: 1.4rem; }
 .resource-grid p { color: var(--muted); font-size: .9rem; flex: 1; }
 .resource-grid strong { font-size: .85rem; font-weight: 700; color: var(--purple); }
@@ -351,8 +353,8 @@ footer p { font-size: .8rem; color: var(--muted); margin: 0; }
   .latency-stats span { font-size: .71rem; }
   .k-controls button { padding: 9px 18px; }
   .resource-grid { grid-template-columns: 1fr; gap: 13px; margin-top: 22px; }
-  .resource-grid a { padding: 18px; }
-  .resource-grid a > span { margin-bottom: 7px; }
+  .resource-grid > .resource-card { padding: 18px; }
+  .resource-grid > .resource-card > span { margin-bottom: 7px; }
   .resource-grid h3 { margin-bottom: 10px; }
   .citation { padding: 17px; }
   .citation-heading h3 { font-size: 1.15rem; }
