@@ -224,8 +224,8 @@ const translations = {
     "zh": "跨越不同领域，<br>TRACE 是否依然稳健？"
   },
   "t56": {
-    "en": "Train on eight benchmarks and evaluate on the held-out one. TRACE improves over E2E on eight; CBD is the exception (83.31 vs. 83.66 F1).",
-    "zh": "在八个基准上训练，测试被留出的第九个基准。TRACE 在其中八个上优于 E2E；CBD 是例外（83.31 对 83.66 F1）。"
+    "en": "Train on eight benchmarks and evaluate on the held-out one. TRACE improves over E2E on eight.",
+    "zh": "在八个基准上训练，测试被留出的第九个基准。TRACE 在其中八个上优于 E2E。"
   },
   "t57": {
     "en": "FlowGen-medium · held out",
@@ -446,14 +446,6 @@ const translations = {
   "t119": {
     "en": "K = 3: <strong>39%</strong> lower latency, with only <strong>0.49</strong> F1 points lost.",
     "zh": "K = 3：延迟降低 <strong>39%</strong>，F1 仅下降 <strong>0.49</strong> 个百分点。"
-  },
-  "t120": {
-    "en": "Two questions.<br/>A closer look at TRACE.",
-    "zh": "两个问题，<br>进一步检验 TRACE。"
-  },
-  "t121": {
-    "en": "Beyond extraction accuracy, we examine cross-domain generalization and the trade-off between accuracy and inference efficiency.",
-    "zh": "除了提取准确率，我们进一步考察跨领域泛化，以及准确率与推理效率的权衡。"
   },
   "t122": {
     "en": "Leave-one-benchmark-out exact F1 (%)",

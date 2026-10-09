@@ -116,13 +116,13 @@
 </div></section>
 <section class="container section poster-panel analysis-panel" id="analysis">
 <div class="poster-rail"><span class="rail-number">4</span><span class="rail-label" data-i18n="t93">分析</span></div>
-<div class="section-heading"><p class="eyebrow" data-i18n="t67">04 / 深入分析</p><h2 data-i18n="t120">两个问题，<br/>进一步检验 TRACE。</h2><p data-i18n="t121">除了提取准确率，我们进一步考察跨领域泛化，以及准确率与推理效率的权衡。</p></div>
+<p class="eyebrow" data-i18n="t67">04 / 深入分析</p>
 <div class="analysis-grid">
 <article class="analysis-question" id="generalization">
 <p class="eyebrow" data-i18n="t54">跨风格泛化</p>
 <h3 data-i18n="t55">跨越不同领域，<br/>TRACE 是否依然稳健？</h3>
 <p class="analysis-answer" data-i18n="t118">在 <strong>8 / 9</strong> 个未见基准上，获得更高的 F1。</p>
-<p data-i18n="t56">在八个基准上训练，测试被留出的第九个基准。TRACE 在其中八个上优于 E2E；CBD 是例外（83.31 对 83.66 F1）。</p>
+<p data-i18n="t56">在八个基准上训练，测试被留出的第九个基准。TRACE 在其中八个上优于 E2E。</p>
 <div class="table-scroll"><table class="generalization-table"><caption class="sr-only" data-i18n="t122">留一基准评测的精确匹配 F1（%）</caption><thead><tr><th scope="col" data-i18n="t48">评测基准</th><th scope="col" data-i18n="t123">E2E 留出</th><th scope="col" data-i18n="t124">TRACE 留出</th><th scope="col" data-i18n="t51">差值</th></tr></thead><tbody><tr><th scope="row">FlowVQA</th><td>87.20</td><td class="trace-score">89.31</td><td class="gain-positive">+2.11</td></tr><tr><th scope="row">CBD</th><td>83.66</td><td class="trace-score">83.31</td><td class="gain-negative">−0.35</td></tr><tr><th scope="row">FC_A</th><td>45.46</td><td class="trace-score">61.38</td><td class="gain-positive">+15.92</td></tr><tr><th scope="row">FC_B</th><td>57.26</td><td class="trace-score">67.76</td><td class="gain-positive">+10.50</td></tr><tr><th scope="row">FlowLearn</th><td>53.77</td><td class="trace-score">65.93</td><td class="gain-positive">+12.16</td></tr><tr><th scope="row">BPMN-VLM</th><td>31.86</td><td class="trace-score">39.18</td><td class="gain-positive">+7.32</td></tr><tr><th scope="row">FlowGen-e</th><td>95.87</td><td class="trace-score">96.97</td><td class="gain-positive">+1.10</td></tr><tr><th scope="row">FlowGen-m</th><td>65.21</td><td class="trace-score">79.55</td><td class="gain-positive">+14.34</td></tr><tr><th scope="row">FlowGen-h</th><td>57.93</td><td class="trace-score">69.42</td><td class="gain-positive">+11.49</td></tr></tbody></table></div>
 <p class="source-note" data-i18n="t58">Qwen3-VL-4B，无 OCR 后处理。来源：论文附录 B、研究海报。</p>
 </article>
