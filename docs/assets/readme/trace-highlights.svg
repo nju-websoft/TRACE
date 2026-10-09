@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="176" viewBox="0 0 1200 176" role="img" aria-labelledby="title desc">
+  <title id="title">TRACE research highlights</title>
+  <desc id="desc">9 benchmarks, 5 VLM backbones, a 22.81 percentage-point exact-F1 gain on BPMN-VLM with Qwen3-VL-4B, and 39 percent lower macro-average latency for K=3 versus K=1. Reported paper results.</desc>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#493158">
+    <rect x="1" y="9" width="287" height="158" rx="18" fill="#fdf3f4" stroke="#e8cdd3"/>
+    <rect x="305" y="9" width="286" height="158" rx="18" fill="#fff6ee" stroke="#eddbc9"/>
+    <rect x="608" y="9" width="287" height="158" rx="18" fill="#eff8f6" stroke="#c7e2dc"/>
+    <rect x="912" y="9" width="287" height="158" rx="18" fill="#f3f0f8" stroke="#ded3e9"/>
+    <g text-anchor="middle">
+      <text x="144" y="77" font-size="48" font-weight="700">9</text>
+      <text x="448" y="77" font-size="48" font-weight="700">5</text>
+      <text x="751" y="77" font-size="43" font-weight="700">+22.81 pp</text>
+      <text x="1055" y="77" font-size="48" font-weight="700">−39%</text>
+      <g font-size="22" font-weight="700">
+        <text x="144" y="110">Benchmarks</text>
+        <text x="448" y="110">VLM backbones</text>
+        <text x="751" y="110">BPMN exact F1</text>
+        <text x="1055" y="110">Inference latency</text>
+      </g>
+      <g font-size="16" fill="#74667e">
+        <text x="144" y="141">Handwritten · digital · synthetic</text>
+        <text x="448" y="141">Qwen · MiniCPM · Gemma · LLaVA</text>
+        <text x="751" y="141">Qwen3-VL-4B vs. whole-image E2E</text>
+        <text x="1055" y="141">K = 3 vs. K = 1 · macro-average</text>
+      </g>
+    </g>
+  </g>
+</svg>

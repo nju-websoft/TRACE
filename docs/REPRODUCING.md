@@ -5,7 +5,7 @@
 <img src="../img/overview.png" alt="TRACE Overview" width="100%"/>
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 
 <p align="center">
 TRACE recovers the directed, labeled graph of a flowchart as a set of triples
@@ -96,6 +96,8 @@ TRACE/
 ---
 
 ## ⚙️ Installation
+
+For the release's requirements files, local-path configuration, and checkpoint prerequisites, start with the [quickstart](QUICKSTART.md#install-and-configure). The commands below describe the individual components used in the research workflow.
 
 ```bash
 conda create -n <CONDA_ENV> python=3.12 -y

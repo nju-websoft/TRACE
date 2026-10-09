@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="350" viewBox="0 0 1200 350" role="img" aria-labelledby="title desc">
+  <title id="title">TRACE — EMNLP 2026 Main</title>
+  <desc id="desc">Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding. Read one marked arrowhead while preserving the full flowchart.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#74667e"/></marker>
+    <marker id="selected-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#356ea2"/></marker>
+  </defs>
+  <rect x="1" y="1" width="1198" height="348" rx="24" fill="#fff" stroke="#e4dce9" stroke-width="2"/>
+  <path d="M25 1H44V349H25Q1 349 1 325V25Q1 1 25 1Z" fill="#e6dced"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="77" y="32" width="255" height="38" rx="19" fill="#e9e0ef"/>
+    <text x="204.5" y="57" font-size="19" font-weight="700" fill="#493158" text-anchor="middle">EMNLP 2026 · MAIN</text>
+    <text x="73" y="165" font-size="96" font-weight="800" letter-spacing="3" fill="#493158">TRACE</text>
+    <text x="78" y="207" font-size="25" font-weight="700" fill="#493158">Triplet Recovery via Arrowhead-Centric</text>
+    <text x="78" y="241" font-size="25" font-weight="700" fill="#493158">Extraction for Flowchart Understanding</text>
+    <text x="78" y="298" font-size="23" fill="#74667e">Read the graph. One arrow at a time.</text>
+    <rect x="697" y="27" width="472" height="294" rx="20" fill="#fbf9fc" stroke="#e4dce9"/>
+    <text x="933" y="59" text-anchor="middle" font-size="18" fill="#74667e">FULL IMAGE · ONE MARKED ARROWHEAD</text>
+    <g fill="none" stroke="#74667e" stroke-width="2.5" marker-end="url(#arrow)">
+      <path d="M933 115V140"/>
+      <path d="M885 181H786V223"/>
+      <path d="M981 181H1080V223" stroke="#356ea2" marker-end="url(#selected-arrow)"/>
+      <path d="M786 267V290H933V270"/>
+      <path d="M1080 267V290H933V270"/>
+    </g>
+    <rect x="879" y="81" width="108" height="34" rx="17" fill="#e2d8ec" stroke="#bda8ce"/>
+    <text x="933" y="104" text-anchor="middle" font-size="17" font-weight="700" fill="#493158">Order</text>
+    <path d="M933 140L981 181L933 222L885 181Z" fill="#ffecdc" stroke="#d4b194" stroke-width="2"/>
+    <text x="933" y="187" text-anchor="middle" font-size="16" fill="#493158">In stock?</text>
+    <rect x="725" y="223" width="122" height="44" rx="9" fill="#f6e0e2" stroke="#d8b2b9"/>
+    <text x="786" y="251" text-anchor="middle" font-size="17" fill="#493158">Restock</text>
+    <rect x="1019" y="223" width="122" height="44" rx="9" fill="#dfede7" stroke="#adc9bd"/>
+    <text x="1080" y="251" text-anchor="middle" font-size="17" fill="#493158">Ship</text>
+    <rect x="1066" y="207" width="28" height="26" rx="5" fill="none" stroke="#356ea2" stroke-width="3"/>
+    <rect x="890" y="246" width="86" height="24" rx="12" fill="#e2d8ec" stroke="#bda8ce"/>
+    <text x="933" y="263" text-anchor="middle" font-size="15" fill="#493158">Done</text>
+    <text x="811" y="172" font-size="15" fill="#74667e">No</text>
+    <text x="1027" y="172" font-size="15" fill="#356ea2" font-weight="700">Yes</text>
+  </g>
+  <path d="M66 335H272" stroke="#efc5ce" stroke-width="7" stroke-linecap="round"/>
+  <path d="M286 335H492" stroke="#f3d1af" stroke-width="7" stroke-linecap="round"/>
+  <path d="M506 335H712" stroke="#b6dcd8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M726 335H932" stroke="#c2dabf" stroke-width="7" stroke-linecap="round"/>
+  <path d="M946 335H1152" stroke="#d1bddf" stroke-width="7" stroke-linecap="round"/>
+</svg>

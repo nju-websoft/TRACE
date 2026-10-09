@@ -1,181 +1,233 @@
-# TRACE
+<div align="center">
 
-**Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding**
+<img src="docs/assets/readme/trace-cover.svg" alt="TRACE — Triplet Recovery via Arrowhead-Centric Extraction for Flowchart Understanding. Accepted to EMNLP 2026 Main." width="100%">
 
-**EMNLP 2026 Main 已接收论文 · Accepted to EMNLP 2026 Main Conference**
+### 从一支箭头，读懂整张流程图。
 
-Daozhu Dong, Kaiwen Shi, Dan Si, Xiaoyu Hao, Tong Liu, Wenjie Zhang, Gong Cheng  
-Nanjing University · Lenovo (Beijing) Co., Ltd.
+**Read the graph. One arrow at a time.**
 
-[论文 / Paper](docs/files/trace-paper.pdf) · [海报 / Poster](docs/files/trace-poster.pdf) · [中文网页](https://nju-websoft.github.io/TRACE/) · [English website](https://nju-websoft.github.io/TRACE/?lang=en) · [复现细节 / Reproduction](docs/REPRODUCING.md)
+<p>
+<b>Daozhu&nbsp;Dong</b><sup>1</sup> · Kaiwen&nbsp;Shi<sup>1</sup> · Dan&nbsp;Si<sup>2</sup> · Xiaoyu&nbsp;Hao<sup>2</sup> · Tong&nbsp;Liu<sup>2</sup> · Wenjie&nbsp;Zhang<sup>2</sup> · Gong&nbsp;Cheng<sup>1</sup>
+</p>
+<p>
+<sup>1</sup> State Key Laboratory of Novel Software Technology, Nanjing University<br>
+<sup>2</sup> Lenovo (Beijing) Co., Ltd.
+</p>
 
-TRACE 以箭头头部为视觉锚点，在保留完整流程图上下文的情况下逐条提取 `(source, condition, target)` 三元组，再汇聚成可追溯的有向图。研究覆盖 9 个评测基准和 5 个 VLM 骨干，包含训练、推理、评测与下游图问答。
+[![EMNLP 2026 Main](https://img.shields.io/badge/EMNLP_2026-Main_Conference-493158?style=flat-square)](docs/files/trace-paper.pdf) [![Project website](https://img.shields.io/badge/Project-中文_%7C_English-736186?style=flat-square)](https://nju-websoft.github.io/TRACE/) [![License](https://img.shields.io/badge/Code-Apache_2.0-658d83?style=flat-square)](LICENSE)
 
-TRACE highlights one arrowhead per copy of the **full image**, asks a fine-tuned VLM to recover that edge, and aggregates triplets into a directed graph. Each output is traceable to an arrowhead. Multi-arrowhead batching (`K=2/3`) is included.
+**[📄 Paper](docs/files/trace-paper.pdf) · [🖼️ Poster](docs/files/trace-poster.pdf) · [🌐 中文网页](https://nju-websoft.github.io/TRACE/) · [🌐 English website](https://nju-websoft.github.io/TRACE/?lang=en) · [🚀 Quickstart](docs/QUICKSTART.md) · [📜 Citation](#citation)**
 
-![TRACE framework](img/overview.png)
+</div>
 
-## Results
+TRACE 以箭头头部为视觉锚点，在每份**完整图像**中只标记一个箭头头部，让模型集中恢复指定连接，同时保留周围上下文；逐条提取的 `(source, condition, target)` 三元组最终汇聚为可追溯的有向图。
 
-Qwen3-VL-4B, task-specific fine-tuning, exact F1 (%), paper Table 2:
+**TRACE** recovers flowchart connections by detecting arrowheads, highlighting **one arrowhead in the full image**, and asking a fine-tuned vision-language model (VLM) to read that connection. The resulting triplets form a directed graph for downstream reasoning and question answering.
 
-| Benchmark | End-to-end | TRACE |
-|---|---:|---:|
-| FC_B | 80.42 | 84.32 |
-| FlowLearn | 88.50 | 93.61 |
-| BPMN-VLM | 64.26 | 87.07 |
-| FlowGen-hard | 68.91 | 74.82 |
+<p align="center">
+<img src="docs/assets/readme/trace-highlights.svg" alt="9 benchmarks; 5 VLM backbones; +22.81 percentage points exact F1 on BPMN-VLM with Qwen3-VL-4B; 39% lower macro-average latency with K=3 versus K=1." width="100%">
+</p>
 
-Downstream QA reaches 98.17% on FlowLearn and 75.78% on FlowVQA on TextFlow's released subset (paper Table 4). `K=3` reduces macro-average latency from 4.00 to 2.44 seconds/image, with F1 changing from 83.30 to 82.81 (paper Table 10). These are reported paper results, not reruns of this release.
+<p align="center">
+<a href="#motivation">Motivation</a> · <a href="#method">Method</a> · <a href="#experiments">Experiments</a> · <a href="#analysis">Analysis</a> · <a href="#getting-started">Getting started</a> · <a href="#resources">Resources</a>
+</p>
 
-## Contents
+---
+
+<a id="motivation"></a>
+
+## 🧩 01 / Motivation · 为什么连接关系难以恢复？
+
+Thin connectors, tiny arrowheads, and dense layouts make flowcharts difficult to read as graphs. Two common approaches face different failure modes:
+
+- **Detect nodes, then reconstruct edges:** missed or imprecise visual elements can propagate into incorrect connections.
+- **Extract the whole graph in one VLM response:** small arrowheads and crowded paths can lead to missing edges or reversed directions.
+
+**TRACE's key idea: focus the task, not crop the context.** Each query targets one marked arrowhead while retaining the entire flowchart. This gives every extracted connection a visual anchor that can be inspected and corrected locally.
+
+---
+
+<a id="method"></a>
+
+## 🏹 02 / Method · 从箭头到有向图
+
+<p align="center">
+<img src="img/overview.png" alt="TRACE framework: synthesize arrowhead-centered supervision, train the detector and VLM, then detect arrowheads and aggregate per-arrow triplets." width="100%">
+</p>
+
+| Stage | What TRACE does |
+|:--|:--|
+| **① Synthesize & train** | Derive aligned arrowhead and triplet supervision from structured flowchart sources; train the arrowhead detector and fine-tune the VLM. |
+| **② Locate & highlight** | Detect arrowheads and create one full-image view per arrowhead, highlighting only the selected head. |
+| **③ Read & aggregate** | Recover `(source, condition, target)` for each view and assemble a directed graph; add `partOf` relations for hierarchical diagrams. |
+
+### A BPMN connection, made explicit
+
+For an illustrative order-fulfillment process, a selected sequence flow becomes:
 
 ```text
-gen_data/       Source parsers, training-format conversion, K-arrow synthesis
-detection/      Detector COCO generation and YOLO conversion
-sam3/           SAM 3 implementation and arrowhead-training configuration
-MLLMs_SFT/      Qwen, Gemma, LLaVA, MiniCPM LoRA training and grid launchers
-lora/inference/ TRACE, E2E, multi-arrowhead, and API inference
-lora/eval/      Dataset-specific exact and relaxed F1 evaluation
-postprocess/    Optional OCR vocabulary correction
-QA/            Graph-query tools and downstream QA
-assets/        SAM 3 tokenizer vocabulary required for local inference
-scripts/       Detector training and local path configuration
-tests/         Evaluation and data-path regression checks
-docs/          Bilingual website, paper, poster, result table
+(In stock?, Yes, Pack order)
+(In stock?, partOf, Sales)
+(Pack order, partOf, Fulfillment)
 ```
 
-Large datasets, weights, outputs, logs, and local settings are excluded from git. The older geometric node-segmentation pipeline in the development workspace is not the TRACE paper method and is not part of this release.
+**[Explore the interactive BPMN example →](https://nju-websoft.github.io/TRACE/#method)** Select an arrow to inspect its triplet and lane membership. The example is hand-authored with predefined outputs, not live inference or a benchmark result. [Download its BPMN XML](docs/assets/bpmn-order-fulfillment.bpmn).
 
-## Install and configure
+---
 
-Reference paper environment: Python 3.12, PyTorch 2.8.0 / CUDA 12.8, Transformers 4.57.1, PEFT 0.15.2. Choose a CUDA-compatible PyTorch build for your hardware.
+<a id="experiments"></a>
+
+## 📊 03 / Experiments · 提取与下游问答
+
+We evaluate **9 benchmarks** spanning handwritten, digital, business-process, and synthetic flowcharts, with **5 VLM backbones**: Qwen3-VL-4B/8B, MiniCPM-V-4.5-8B, Gemma3-4B-IT, and LLaVA-v1.6-Mistral-7B.
+
+### Triplet recovery
+
+Representative results with **Qwen3-VL-4B**, task-specific fine-tuning, and **exact F1 (%)** (paper Table 2):
+
+| Benchmark | Whole-image E2E | TRACE | Δ F1 (pp) |
+|:--|--:|--:|--:|
+| FC_B | 80.42 | **84.32** | +3.90 |
+| FlowLearn | 88.50 | **93.61** | +5.11 |
+| **BPMN-VLM** | 64.26 | **87.07** | **+22.81** |
+| FlowGen-medium | 77.23 | **85.42** | +8.19 |
+| FlowGen-hard | 68.91 | **74.82** | +5.91 |
+
+<details>
+<summary><b>All nine benchmarks · Qwen3-VL-4B</b></summary>
+
+| Benchmark | Whole-image E2E | TRACE | Δ F1 (pp) |
+|:--|--:|--:|--:|
+| FlowVQA | 92.28 | **93.77** | +1.49 |
+| CBD | **83.40** | 82.56 | −0.84 |
+| FC_A | **64.60** | 63.91 | −0.69 |
+| FC_B | 80.42 | **84.32** | +3.90 |
+| FlowLearn | 88.50 | **93.61** | +5.11 |
+| BPMN-VLM | 64.26 | **87.07** | +22.81 |
+| FlowGen-easy | **85.87** | 84.18 | −1.69 |
+| FlowGen-medium | 77.23 | **85.42** | +8.19 |
+| FlowGen-hard | 68.91 | **74.82** | +5.91 |
+
+</details>
+
+[Compare all five backbones on the project page](https://nju-websoft.github.io/TRACE/#results) · [Download the full results table](docs/assets/results.csv)
+
+### Graph-based question answering
+
+The recovered graph is also useful beyond extraction: a tool-calling QA layer queries the graph to answer flowchart questions.
+
+| Method | FlowLearn accuracy (%) | FlowVQA accuracy (%) |
+|:--|--:|--:|
+| Zero-shot Qwen3-VL-4B | 66.83 | 62.03 |
+| TextFlow with ground-truth text | 88.33 | 75.18 |
+| **TRACE + graph tools** | **98.17** | **75.78** |
+| Ground-truth triplets + graph tools | 100.00 | 78.46 |
+
+Paper Table 4, evaluated on TextFlow's released subset: **100 FlowLearn images** and **197 FlowVQA images**. These are not full-dataset QA scores. All results shown here are reported paper results, not new GPU reruns of this release.
+
+---
+
+<a id="analysis"></a>
+
+## 🔎 04 / Analysis · 用问题展开
+
+### Q1 · Can TRACE recover connections in an unseen domain?
+
+In leave-one-out evaluation, the model trains on eight benchmarks and is tested on the held-out ninth. Without OCR post-processing, TRACE improves exact F1 on **8 of 9** held-out benchmarks. For example, FC_A improves from **45.46 → 61.38**, and FlowGen-medium from **65.21 → 79.55** (paper Appendix B).
+
+### Q2 · Can we read several arrowheads per call?
+
+Multi-arrowhead batching marks **K arrowheads** in a full-image view, trading a small amount of extraction accuracy for fewer VLM calls.
+
+| Setting | Exact F1 (%) | Relaxed F1 (%) | Latency (s/image) |
+|:--|--:|--:|--:|
+| K = 1 | **83.30** | **86.52** | 4.00 |
+| K = 2 | 82.92 | 86.08 | 2.78 |
+| K = 3 | 82.81 | 85.84 | **2.44** |
+
+**K = 3 reduces latency by 39% with a 0.49-point exact-F1 decrease.** These are macro-averages across nine benchmarks using Qwen3-VL-4B on an RTX 5880 Ada (paper Table 10); latency excludes model loading.
+
+[Explore generalization and batching →](https://nju-websoft.github.io/TRACE/#analysis)
+
+---
+
+<a id="getting-started"></a>
+
+## 🚀 Getting started · 复现入口
+
+### 1. Install
 
 ```bash
+git clone https://github.com/nju-websoft/TRACE.git
+cd TRACE
 conda create -n trace python=3.12 -y
 conda activate trace
 pip install -r requirements.txt
-# Detector/VLM training:
+# For detector / VLM training:
 pip install -r requirements-training.txt
-# Install relevant Swift / OCR / rendering packages only when needed:
-# pip install -r requirements-optional.txt
-
-python scripts/configure_paths.py \
-  --model-root /absolute/path/to/models \
-  --data-root /absolute/path/to/TRACE/Dataset \
-  --conda-root /absolute/path/to/miniconda3 --conda-env trace
 ```
 
-The configuration command resolves legacy placeholders and retains ignored templates for reconfiguration. `--check` validates without writing. Configured paths must not contain spaces or shell metacharacters. The output root defaults to this checkout.
+Reference environment: **Python 3.12 · PyTorch 2.8.0 / CUDA 12.8 · Transformers 4.57.1 · PEFT 0.15.2**. Select a PyTorch build compatible with your hardware.
 
-Download base models from their publishers (for example `models/Qwen3-VL-4B-Instruct` and `models/sam3/sam3.pt`); SAM 3 may require approved Hugging Face access. Fine-tuned TRACE adapters and detector checkpoints are **not bundled**; train them using the included launchers.
+### 2. Prepare data and models
 
-## Data preparation
+Use the [data record](https://doi.org/10.5281/zenodo.20374997) and the benchmarks' original sources, then configure local paths following the [quickstart](docs/QUICKSTART.md#install-and-configure). Base models must be obtained from their publishers; **fine-tuned TRACE adapters and detector checkpoints are not bundled**. Train them with the included launchers.
 
-Synthesized data record: [Zenodo DOI 10.5281/zenodo.20374997](https://doi.org/10.5281/zenodo.20374997). **Files currently have restricted access.** Request access through the record. This release does not publish the anonymous review token or change data permissions. The code can also synthesize supervision from original sources.
+### 3. Follow your workflow
 
-Separate supplementary archives contain `Dataset/data_4_training/`, `Dataset/bpmn/`, and `detection/datasets/`. Raw benchmarks come from their official sources listed in the reproduction guide. Derived data retain upstream restrictions; see [third-party notices](THIRD_PARTY_NOTICES.md).
+| I want to… | Start here |
+|:--|:--|
+| Prepare arrowhead-centered supervision | [Data preparation](docs/QUICKSTART.md#data-preparation) · [`gen_data/`](gen_data/) |
+| Train detectors and VLM adapters | [Training commands](docs/QUICKSTART.md#train) · [`scripts/`](scripts/) · [`MLLMs_SFT/`](MLLMs_SFT/) |
+| Recover triplets, batch arrowheads, and evaluate | [Inference & evaluation](docs/QUICKSTART.md#infer-and-evaluate) · [`lora/`](lora/) |
+| Reproduce dataset-specific experiments | [Full reproduction guide](docs/REPRODUCING.md) |
+| Explore graph-based question answering | [`QA/`](QA/) · [Input requirements](docs/QUICKSTART.md#infer-and-evaluate) |
+| Preview or maintain the bilingual website | [Website guide](docs/WEBSITE.md) |
 
-Build the exact arrow manifest filenames expected by the grid launchers:
+Evaluation supports exact F1 and relaxed F1 (component edit similarity ≥ 0.85). Define the test split explicitly with `--image-dir` or `--test-json`; missing predictions must count toward the score. See the [release notes](docs/QUICKSTART.md#infer-and-evaluate) for evaluation corrections and sampled-test requirements.
 
-```bash
-python -m gen_data.prepare_training_data \
-  --data-dir Dataset/data_4_training \
-  --datasets cbd fca fcb flowlearn flowvqa bpmn flowgen_easy flowgen_medium flowgen_hard
+<details>
+<summary><b>Repository map</b></summary>
+
+```text
+TRACE/
+├── gen_data/        Source parsing, supervision formatting, K-arrow synthesis
+├── detection/       Arrowhead COCO generation and YOLO conversion
+├── sam3/            SAM 3 implementation and training configurations
+├── MLLMs_SFT/       Qwen, Gemma, LLaVA, MiniCPM fine-tuning launchers
+├── lora/
+│   ├── inference/   TRACE, whole-image E2E, batching, and API inference
+│   └── eval/        Dataset-specific exact / relaxed F1
+├── postprocess/     Optional OCR vocabulary correction
+├── QA/              Graph-query tools and downstream QA
+├── assets/          SAM 3 tokenizer vocabulary
+├── scripts/         Detector training and local path configuration
+├── tests/           Evaluation and data-path regression checks
+└── docs/            Website, guides, paper, poster, and result tables
 ```
 
-This includes official CBD/FC_B validation and BPMN `dev` manifests, and resolves relative annotated-image paths in the released data. TRACE training uses self-contained annotated images; E2E training and test inference require original images. For example, build FC_B E2E train and validation manifests:
+Datasets, weights, model outputs, logs, and local settings are excluded from git. This is the TRACE paper's arrowhead-centric pipeline; the older geometric node-segmentation pipeline is not part of this release.
 
-```bash
-python gen_data/format_data.py --dataset fcb --format triplet \
-  --data-dir Dataset/data_4_training/fcb \
-  --image-dir /absolute/path/to/FC_B/train \
-  --output-dir Dataset/data_4_triplet_training
-python gen_data/format_data.py --dataset fcb --format triplet \
-  --data-dir Dataset/data_4_training/fcb_val \
-  --image-dir /absolute/path/to/FC_B/val --output-prefix fcb_val \
-  --output-dir Dataset/data_4_triplet_training
-```
+</details>
 
-Match output names to each launcher's configuration; BPMN E2E validation uses `bpmn_triplet_dev.json`, configurable via `--triplet-output`. Checkpoint selection uses official validation or a fixed-seed partition of the training data.
+---
 
-## Train
+<a id="resources"></a>
 
-```bash
-# From the repository root:
-bash scripts/train_sam3.sh --gpu-ids "0,1,2,3" --datasets "fcb flowlearn flowvqa"
-bash scripts/train_yolo.sh --gpu-ids "0,1,2,3" --datasets "bpmn flowgen_easy"
+## 📚 05 / Resources · 进一步了解 TRACE
 
-# VLM launchers must run from the backbone directory:
-cd MLLMs_SFT/Qwen-VL-Series-Finetune
-bash scripts/train_all_TRACE_grid_search.sh --arrow-sources "sam3_ft groundtruth"
-# Prepare original-image manifests before E2E training:
-bash scripts/train_all_E2E_grid_search.sh
-bash scripts/train_leave_one_out_TRACE.sh
-```
+| Paper | Poster | Project page | Data record |
+|:--|:--|:--|:--|
+| [Read PDF](docs/files/trace-paper.pdf) | [View poster](docs/files/trace-poster.pdf) | [中文](https://nju-websoft.github.io/TRACE/) / [English](https://nju-websoft.github.io/TRACE/?lang=en) | [Zenodo record](https://doi.org/10.5281/zenodo.20374997) |
+| Method, comparisons, and ablations | Visual research overview | Interactive BPMN example and results | Synthesized supervision and arrowhead annotations |
 
-Gemma, LLaVA, and MiniCPM have corresponding launchers in their backbone directories. These launchers train, select the best validation checkpoint, infer, and score. [The reproduction guide](docs/REPRODUCING.md) documents dataset-specific settings.
+Consult the data record for current file availability and access instructions. Benchmark-derived data retain their upstream terms; this code release does not change data permissions.
 
-## Infer and evaluate
+<a id="citation"></a>
 
-Run inference modules from the repository root:
+## 📜 Citation
 
-```bash
-python -m lora.inference.get_triplets_sft_trace \
-  --image-dir /absolute/path/to/test_images --output-dir output/trace \
-  --base-model-path /absolute/path/to/Qwen3-VL-4B-Instruct \
-  --adapter-path /absolute/path/to/adapter_checkpoint \
-  --arrow-source sam3_ft \
-  --sam3-ft-checkpoint /absolute/path/to/detector_checkpoint.pt --gpus 0
-
-# Reuse the K=1 detected boxes for multi-arrowhead batching:
-python -m lora.inference.get_triplets_k \
-  --image-dir /absolute/path/to/test_images --bbox-source-dir output/trace \
-  --output-dir output/trace_k3 \
-  --base-model-path /absolute/path/to/Qwen3-VL-4B-Instruct \
-  --adapter-path /absolute/path/to/adapter_checkpoint \
-  --k 3 --gpus 0 --timing-output output/trace_k3/timing.json
-
-python -m lora.eval.eval_TRACE --dataset fcb --output-dir output/trace \
-  --image-dir /absolute/path/to/test_images
-python -m lora.eval.eval_E2E --dataset fcb --prediction-file output/e2e.json \
-  --image-dir /absolute/path/to/test_images
-python -m unittest discover -s tests -v
-```
-
-Use `--is-bpmn` / `--is-flowgen` for hierarchical outputs. `groundtruth` arrowheads are an oracle-box experiment, not deployable detection. Outputs are `output/<run>/<image_stem>/arrow_triplets.json`.
-
-The K=1 adapter supports the paper's batching comparison; K-aware adapters are also supported. `gen_data/gen_k_arrow_data.py` retains the experimental split/manifest conventions for K-aware training: inspect its configuration and prepare the matching inputs first. Timing excludes model loading and reports throughput and average worker time; compare the same timing metric across runs.
-
-Evaluators report exact F1 and relaxed F1 (component edit similarity ≥ 0.85). This release fixes missing prediction files being silently skipped, includes the 0.85 boundary, and makes matching traversal deterministic. Use `--image-dir` or `--test-json` to explicitly define the test split when ground-truth storage also contains training images. The launchers pass their test scope automatically. For sampled evaluation, supply a matching `--test-json` rather than relying on available predictions. These corrections can change scores for incomplete or boundary-case outputs; displayed paper tables are unchanged.
-
-Graph QA uses the modules in `QA/`. Supply question/test-image/graph inputs through their CLI. Comparison launchers additionally expect TextFlow's released subset and prepared triplets; those dataset-derived files remain in the local research directory and are excluded from the code-only release. API inference/judging requires your own environment keys (`OPENAI_API_KEY`, `ZAI_API_KEY` as applicable).
-
-## Bilingual project page
-
-`docs/index.html` is a static page with local assets. **Chinese is the default**; the header switches languages, and `?lang=en` opens English directly. It includes the method diagram, an interactive BPMN order-fulfillment illustration with two lanes and an exclusive gateway, five-backbone results, QA, batching, PDFs, and citation copying. Selecting any of seven sequence flows shows its triplet and endpoint `partOf` lane relations. The hand-authored [BPMN source](docs/assets/bpmn-order-fulfillment.bpmn) is downloadable; the demo uses predefined outputs, not a live model or benchmark result. The poster QR code stays pointed at https://github.com/nju-websoft/TRACE.
-
-The page follows the research poster's visual identity: white background, purple titles, pastel section rails, rounded panels, and original poster illustrations and institutional logos. On mobile, vertical rails become horizontal section headers. See [poster artwork notices](docs/assets/poster/README.md) for asset provenance and rights.
-
-Its narrative follows **Motivation → Method → Experiments → Analysis → Resources**.
-Motivation illustrates the two failure modes from the poster; experiments group
-triplet extraction and downstream QA. Analysis uses two questions to present
-cross-domain leave-one-out results and multi-arrowhead batching together.
-Section introductions use 20px text on desktop and 18px on small screens.
-
-CSS and JavaScript URLs in `docs/index.html` use the first 12 characters of each
-file's SHA-256 as a `v` query parameter. Update that value when changing an
-asset so cached translations cannot overwrite newly published page copy.
-
-```bash
-python -m http.server 8000 --directory docs
-```
-
-Open `http://localhost:8000`. The published project website is [https://nju-websoft.github.io/TRACE/](https://nju-websoft.github.io/TRACE/), served by GitHub Pages from `main` → `/docs`. Use this address in a CV; append `?lang=en` for English.
-
-## License and citation
-
-TRACE-authored code: [Apache-2.0](LICENSE). Third-party code, models, and data retain their terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+If TRACE is useful in your research, please cite our **EMNLP 2026 Main** paper:
 
 ```bibtex
 @inproceedings{dong2026trace,
@@ -188,6 +240,10 @@ TRACE-authored code: [Apache-2.0](LICENSE). Third-party code, models, and data r
 }
 ```
 
-论文已被 **EMNLP 2026 Main Conference** 接收。以上为临时论文引用，正式论文集发布后将补充页码、DOI 和 ACL Anthology 链接。
+This citation is provisional; pages, DOI, and the ACL Anthology link will be added when the proceedings are available. **Correspondence:** [Gong Cheng](mailto:gcheng@nju.edu.cn).
 
-The paper is accepted to the **EMNLP 2026 Main Conference**. This is a provisional paper citation; pages, DOI, and the ACL Anthology URL will be added when the proceedings are available. Correspondence: gcheng@nju.edu.cn.
+### License & acknowledgments
+
+TRACE-authored code is licensed under [Apache-2.0](LICENSE). Third-party code, models, datasets, institutional logos, and poster illustrations retain their respective terms; see [third-party notices](THIRD_PARTY_NOTICES.md) and [poster artwork notices](docs/assets/poster/README.md).
+
+The README shares the project website and poster's purple-and-pastel visual identity. Its banner and result cards are editable, self-contained SVG assets in [`docs/assets/readme/`](docs/assets/readme/).
