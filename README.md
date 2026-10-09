@@ -163,6 +163,10 @@ triplet extraction and downstream QA. Analysis uses two questions to present
 cross-domain leave-one-out results and multi-arrowhead batching together.
 Section introductions use 20px text on desktop and 18px on small screens.
 
+CSS and JavaScript URLs in `docs/index.html` use the first 12 characters of each
+file's SHA-256 as a `v` query parameter. Update that value when changing an
+asset so cached translations cannot overwrite newly published page copy.
+
 ```bash
 python -m http.server 8000 --directory docs
 ```
