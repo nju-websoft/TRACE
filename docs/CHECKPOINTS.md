@@ -88,7 +88,7 @@ python -m lora.eval.eval_TRACE \
   --image-dir /absolute/path/to/FC_A/test_images
 ```
 
-Here `--arrow-source sam` means **original pretrained SAM 3**, not SAM 1 or a LOO-fine-tuned detector. Obtain SAM 3 from [Meta's official repository](https://github.com/facebookresearch/sam3) under its SAM License and configure its local path. No SAM 3 checkpoint is redistributed in this release.
+Here `--arrow-source sam` uses **original pretrained SAM 3** with the text prompt `arrowhead`; this detector is sufficient for the FC_A-held-out setup and is not a LOO-fine-tuned checkpoint. Obtain SAM 3 from [Meta's official repository](https://github.com/facebookresearch/sam3) under its SAM License and configure its local path. No SAM 3 checkpoint is redistributed in this release.
 
 ## Recorded evaluation
 
