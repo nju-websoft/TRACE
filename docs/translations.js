@@ -343,6 +343,18 @@ const translations = {
     "en": "Cite this work",
     "zh": "引用本工作"
   },
+  "t85": {
+    "en": "Data record",
+    "zh": "数据记录"
+  },
+  "t86": {
+    "en": "Synthesized supervision and arrowhead annotations.",
+    "zh": "合成监督数据与箭头头部标注。"
+  },
+  "t87": {
+    "en": "View data record",
+    "zh": "查看数据记录"
+  },
   "t89": {
     "en": "Copy BibTeX",
     "zh": "复制 BibTeX"
