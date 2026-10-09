@@ -44,6 +44,10 @@ The training manifest and the original training log were checked together. The s
 
 FC_A exclusion applies to this TRACE fine-tuning manifest, not to an audit of the upstream base model's pretraining corpus.
 
+## Why release the FC_A-held-out adapter?
+
+In our assessment, FC_A is comparatively low quality. We therefore release the adapter trained without FC_A: it avoids relying on that dataset and, in our judgment, remains sufficient for most use cases. This is a practical release choice, not a claim that the adapter is optimal for every domain or replaces evaluation on a target dataset.
+
 ## Download and verify
 
 Download the adapter files directly from this Hugging Face repository. Clone the repository or use `snapshot_download` to get a local folder containing `adapter_model.safetensors`, `adapter_config.json`, this model card, `training_manifest.json` with aggregate provenance, license notices, and `SHA256SUMS`. The adapter tensors are unchanged from the source checkpoint; only the configuration's base-model reference has been normalized to its public model ID.

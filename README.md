@@ -232,7 +232,7 @@ Datasets, weights, model outputs, logs, and local settings are excluded from git
 
 ## 📚 05 / Resources
 
-**Model checkpoint:** [Qwen3-VL-4B FC_A-held-out LOO adapter on Hugging Face](https://huggingface.co/SuperbPiggy/trace-qwen3-vl-4b-loo-fca) · [Model details and loading instructions](docs/CHECKPOINTS.md). The original SAM 3 works well for arrowhead detection with the prompt `arrowhead`; only the Qwen adapter is hosted here, not the Qwen base weights or a SAM 3 checkpoint.
+**Model checkpoint:** [Qwen3-VL-4B FC_A-held-out LOO adapter on Hugging Face](https://huggingface.co/SuperbPiggy/trace-qwen3-vl-4b-loo-fca) · [Model details and loading instructions](docs/CHECKPOINTS.md). We release the FC_A-held-out adapter because FC_A is comparatively low quality; in our assessment, excluding it still leaves a model sufficient for most use cases. The original SAM 3 works well for arrowhead detection with the prompt `arrowhead`; only the Qwen adapter is hosted here, not the Qwen base weights or a SAM 3 checkpoint.
 
 | Paper | Poster | Project page | Data record |
 |:--|:--|:--|:--|
