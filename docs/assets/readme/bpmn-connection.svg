@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="430" viewBox="0 0 800 430" role="img" aria-labelledby="title desc">
+  <title id="title">A BPMN connection, made explicit</title>
+  <desc id="desc">Illustrative order fulfillment with Sales and Fulfillment lanes, a start event, four tasks, an exclusive gateway, two end events, and seven sequence flows. The blue box marks the arrowhead from In stock? to Pack order, with condition Yes. This is the same hand-authored process used on the TRACE website, not a benchmark sample or live model output.</desc>
+  <defs>
+    <marker id="bpmn-arrow" markerWidth="9" markerHeight="9" orient="auto" refX="7" refY="4"><path d="M0 0L8 4L0 8Z" fill="#627782"/></marker>
+    <marker id="bpmn-selected-arrow" markerWidth="9" markerHeight="9" orient="auto" refX="7" refY="4"><path d="M0 0L8 4L0 8Z" fill="#2463eb"/></marker>
+  </defs>
+  <rect width="800" height="430" rx="12" fill="#fff"/>
+  <g stroke="#8da6ad" stroke-width="1.3">
+    <rect x="20" y="22" width="760" height="380" rx="3" fill="#fff"/>
+    <rect x="52" y="22" width="728" height="188" fill="#faf7fc" stroke="none"/>
+    <rect x="52" y="210" width="728" height="192" fill="#f1faf8" stroke="none"/>
+    <path d="M52 22V402M104 22V402M52 210H780" fill="none"/>
+    <rect x="20" y="22" width="760" height="380" rx="3" fill="none"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#74667e" text-anchor="middle">
+    <text transform="translate(40 212) rotate(-90)">Order fulfillment</text>
+    <text transform="translate(83 116) rotate(-90)">Sales</text>
+    <text transform="translate(83 306) rotate(-90)">Fulfillment</text>
+  </g>
+  <g fill="none" marker-end="url(#bpmn-arrow)" stroke="#627782" stroke-width="2">
+    <path id="Flow_StartValidate" d="M166 108H212"/>
+    <path id="Flow_ValidateStock" d="M340 108H388"/>
+    <path id="Flow_StockPack" d="M415 135V236H295V276" stroke="#2463eb" stroke-width="3" marker-end="url(#bpmn-selected-arrow)"/>
+    <path id="Flow_StockCancel" d="M442 108H500"/>
+    <path id="Flow_PackShip" d="M370 307H432"/>
+    <path id="Flow_ShipEnd" d="M582 307H652"/>
+    <path id="Flow_CancelEnd" d="M632 108H684"/>
+  </g>
+  <g fill="#fff" stroke="#506a74" stroke-width="1.8">
+    <circle id="Event_Start" cx="148" cy="108" r="18"/>
+    <rect id="Task_Validate" x="212" y="76" width="128" height="64" rx="10"/>
+    <path id="Gateway_Stock" d="M415 81L442 108L415 135L388 108Z"/>
+    <path d="M406 99L424 117M424 99L406 117" fill="none" stroke-width="2.5"/>
+    <rect id="Task_Cancel" x="500" y="76" width="132" height="64" rx="10"/>
+    <circle id="Event_Cancelled" cx="702" cy="108" r="18" stroke-width="3.8"/>
+    <rect id="Task_Pack" x="220" y="276" width="150" height="62" rx="10"/>
+    <rect id="Task_Ship" x="432" y="276" width="150" height="62" rx="10"/>
+    <circle id="Event_Completed" cx="670" cy="307" r="18" stroke-width="3.8"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#493158" text-anchor="middle">
+    <text x="148" y="157"><tspan x="148">Order</tspan><tspan x="148" dy="20">received</tspan></text>
+    <text x="276" y="114">Validate order</text>
+    <text x="415" y="61">In stock?</text>
+    <text x="566" y="114">Cancel order</text>
+    <text x="702" y="157">Cancelled</text>
+    <text x="295" y="313">Pack order</text>
+    <text x="507" y="313">Ship order</text>
+    <text x="670" y="358">Completed</text>
+    <text x="438" y="192" font-size="16" font-weight="700" fill="#2463eb">Yes</text>
+    <text x="470" y="91" font-size="16" fill="#74667e">No</text>
+  </g>
+  <rect id="arrow-highlight" x="279" y="258" width="34" height="28" rx="3" fill="none" stroke="#2463eb" stroke-width="3"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#74667e">
+    <rect x="235" y="411" width="13" height="13" rx="2" fill="none" stroke="#2463eb" stroke-width="2"/>
+    <text x="258" y="422">Selected arrowhead · full diagram context retained</text>
+  </g>
+</svg>

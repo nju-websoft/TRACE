@@ -61,7 +61,11 @@ Thin connectors, tiny arrowheads, and dense layouts make flowcharts difficult to
 
 ### A BPMN connection, made explicit
 
-For an illustrative order-fulfillment process, a selected sequence flow becomes:
+<p align="center">
+<img src="docs/assets/readme/bpmn-connection.svg" alt="BPMN order-fulfillment process with Sales and Fulfillment lanes. The arrowhead entering Pack order is boxed in blue, grounding the connection (In stock?, Yes, Pack order)." width="100%">
+</p>
+
+In this illustrative order-fulfillment process, the blue box marks the arrowhead entering **Pack order**. Its sequence flow crosses from the **Sales** lane to the **Fulfillment** lane and becomes:
 
 ```text
 (In stock?, Yes, Pack order)
@@ -131,7 +135,21 @@ Paper Table 4, evaluated on TextFlow's released subset: **100 FlowLearn images**
 
 ### Q1 · Can TRACE recover connections in an unseen domain?
 
-In leave-one-out evaluation, the model trains on eight benchmarks and is tested on the held-out ninth. Without OCR post-processing, TRACE improves exact F1 on **8 of 9** held-out benchmarks. For example, FC_A improves from **45.46 → 61.38**, and FlowGen-medium from **65.21 → 79.55** (paper Appendix B).
+In leave-one-out (LOO) evaluation, Qwen3-VL-4B trains on eight benchmarks and is tested on the held-out ninth. Without OCR post-processing, TRACE improves exact F1 on **8 of 9** held-out benchmarks:
+
+| Held-out benchmark | Whole-image E2E LOO | TRACE LOO | Δ F1 (pp) |
+|:--|--:|--:|--:|
+| FlowVQA | 87.20 | **89.31** | +2.11 |
+| CBD | **83.66** | 83.31 | −0.35 |
+| FC_A | 45.46 | **61.38** | +15.92 |
+| FC_B | 57.26 | **67.76** | +10.50 |
+| FlowLearn | 53.77 | **65.93** | +12.16 |
+| BPMN-VLM | 31.86 | **39.18** | +7.32 |
+| FlowGen-easy | 95.87 | **96.97** | +1.10 |
+| FlowGen-medium | 65.21 | **79.55** | +14.34 |
+| FlowGen-hard | 57.93 | **69.42** | +11.49 |
+
+Exact F1 (%), paper Appendix B, Table 6. Both methods use the same held-out benchmark protocol; the FlowLearn scores above exclude the optional OCR refinement.
 
 ### Q2 · Can we read several arrowheads per call?
 
