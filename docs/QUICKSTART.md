@@ -25,7 +25,7 @@ python scripts/configure_paths.py \
 
 The configuration command resolves legacy placeholders and retains ignored templates for reconfiguration. `--check` validates without writing. Configured paths must not contain spaces or shell metacharacters. The output root defaults to this checkout.
 
-Download base models from their publishers (for example `models/Qwen3-VL-4B-Instruct` and `models/sam3/sam3.pt`); SAM 3 may require approved Hugging Face access. Fine-tuned TRACE adapters and detector checkpoints are **not bundled**; train them using the included launchers.
+Download base models from their publishers (for example `models/Qwen3-VL-4B-Instruct` and `models/sam3/sam3.pt`); SAM 3 may require approved Hugging Face access. The [Qwen3-VL-4B FC_A-held-out LOO adapter](CHECKPOINTS.md) is hosted on Hugging Face. It uses original SAM 3 (`--arrow-source sam`), not a LOO-fine-tuned detector. No weights are bundled in git; other adapters and fine-tuned detector checkpoints must be trained using the included launchers.
 
 ## Data preparation
 

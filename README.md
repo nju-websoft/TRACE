@@ -14,7 +14,7 @@
 
 [![EMNLP 2026 Main](https://img.shields.io/badge/EMNLP_2026-Main_Conference-493158?style=flat-square)](docs/files/trace-paper.pdf) [![Project website](https://img.shields.io/badge/Project-Website-736186?style=flat-square)](https://nju-websoft.github.io/TRACE/?lang=en) [![License](https://img.shields.io/badge/Code-Apache_2.0-658d83?style=flat-square)](LICENSE)
 
-**[📄 Paper](docs/files/trace-paper.pdf) · [🖼️ Poster](docs/files/trace-poster.pdf) · [🌐 Project page](https://nju-websoft.github.io/TRACE/?lang=en) · [🚀 Quickstart](docs/QUICKSTART.md) · [📜 Citation](#citation)**
+**[📄 Paper](docs/files/trace-paper.pdf) · [🖼️ Poster](docs/files/trace-poster.pdf) · [🌐 Project page](https://nju-websoft.github.io/TRACE/?lang=en) · [💾 Adapter](docs/CHECKPOINTS.md) · [🚀 Quickstart](docs/QUICKSTART.md) · [📜 Citation](#citation)**
 
 </div>
 
@@ -187,7 +187,7 @@ Reference environment: **Python 3.12 · PyTorch 2.8.0 / CUDA 12.8 · Transformer
 
 ### 2. Prepare data and models
 
-Use the [data record](https://doi.org/10.5281/zenodo.20374997) and the benchmarks' original sources, then configure local paths following the [quickstart](docs/QUICKSTART.md#install-and-configure). Base models must be obtained from their publishers; **fine-tuned TRACE adapters and detector checkpoints are not bundled**. Train them with the included launchers.
+Use the [data record](https://doi.org/10.5281/zenodo.20374997) and the benchmarks' original sources, then configure local paths following the [quickstart](docs/QUICKSTART.md#install-and-configure). The [model details and loading instructions](docs/CHECKPOINTS.md) describe the FC_A-held-out adapter. Obtain the Qwen base model and original SAM 3 from their publishers separately. Other adapters and fine-tuned detectors are not published; train them with the included launchers.
 
 ### 3. Follow your workflow
 
@@ -231,6 +231,8 @@ Datasets, weights, model outputs, logs, and local settings are excluded from git
 <a id="resources"></a>
 
 ## 📚 05 / Resources
+
+**Model checkpoint:** [Qwen3-VL-4B FC_A-held-out LOO adapter on Hugging Face](https://huggingface.co/SuperbPiggy/trace-qwen3-vl-4b-loo-fca) · [Model details and loading instructions](docs/CHECKPOINTS.md). Adapter only; no Qwen base weights or SAM 3 checkpoint.
 
 | Paper | Poster | Project page | Data record |
 |:--|:--|:--|:--|
