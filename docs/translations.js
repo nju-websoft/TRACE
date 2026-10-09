@@ -339,18 +339,6 @@ const translations = {
     "en": "Read PDF",
     "zh": "阅读 PDF"
   },
-  "t85": {
-    "en": "Data record",
-    "zh": "数据记录"
-  },
-  "t86": {
-    "en": "Synthesized supervision and arrowhead annotations. The current Zenodo record has restricted access.",
-    "zh": "合成监督数据与箭头头部标注。当前 Zenodo 记录仍为受限访问。"
-  },
-  "t87": {
-    "en": "View access details",
-    "zh": "查看访问说明"
-  },
   "t88": {
     "en": "Cite this work",
     "zh": "引用本工作"

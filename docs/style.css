@@ -228,7 +228,7 @@ meter.trace-meter::-moz-meter-bar { background: #239aa0; }
 .latency-stats strong { display: block; font-size: 1.7rem; font-weight: 700; color: var(--green-ink); }
 .latency-stats span { font-size: .75rem; color: var(--muted); display: block; }
 .latency-card .source-note { margin-bottom: 0; margin-top: 23px; }
-.resource-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 28px 0 32px; }
+.resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 28px 0 32px; }
 .resource-grid a { padding: 22px 18px; border: 1px solid #d9cce0; background: #fcfafd; text-decoration: none; border-radius: 12px; display: flex; flex-direction: column; transition: border-color .2s; }
 .resource-grid a:hover { border-color: var(--purple); }
 .resource-grid a > span { font-size: .85rem; font-weight: 700; color: #917a9c; margin-bottom: 15px; }
